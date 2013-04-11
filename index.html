@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Ncpol2sdpa : A Matlab converter from noncommutative polynomial optimization problems to sparse SDPA input format" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ncpol2sdpa</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/peterwittek/ncpol2sdpa">View on GitHub</a>
+
+          <h1 id="project_title">Ncpol2sdpa</h1>
+          <h2 id="project_tagline">A Matlab converter from noncommutative polynomial optimization problems to sparse SDPA input format</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/peterwittek/ncpol2sdpa/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/peterwittek/ncpol2sdpa/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Ncpol2sdpa</h1>
+
+<p>Ncpol2sdpa is a Matlab script to convert a noncommutative polynomial optimization problem to a sparse SDP problem that can be processed by the SDPA family of solvers. The optimization problem can be unconstrained or constrained by equalities and inequalities.</p>
+
+<p>The objective is to be able to solve very large scale optimization problems. For example, a convergent series of lower bounds can be obtained for ground state problems with arbitrary Hamiltonians.</p>
+
+<h1>Dependencies</h1>
+
+<p>The code requires SeDuMi and Yalmip in the Matlab search path.</p>
+
+<h1>Usage</h1>
+
+<p>A simple usage example is included in example.m. A more sophisticated application is given in hamiltonian.m, which implements the Hamiltonian of a fermionic system in a 2D grid.</p>
+
+<h1>Acknowledgement</h1>
+
+<p>The code for momentum generation is based on the noncommutative example in Bermuja:</p>
+
+<p><a href="http://math.berkeley.edu/%7Ephilipp/Software/Moments">http://math.berkeley.edu/~philipp/Software/Moments</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ncpol2sdpa maintained by <a href="https://github.com/peterwittek">peterwittek</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
