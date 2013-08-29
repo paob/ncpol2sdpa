@@ -43,14 +43,22 @@
 <h1>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
-<p>The code requires <a href="http://sympy.org/">SymPy</a>&gt;=0.7.2 in the Python search path. The code is known to work with Python 2.6.8 and 2.7.5, and also with Pypy 2.0.2. </p>
+<p>The code requires <a href="http://sympy.org/">SymPy</a>&gt;=0.7.2 in the Python search path. The code is known to work with Python 2.6.8 and 2.7.5, and also with Pypy 1.8 and 2.0.2. Using Pypy is highly recommended, as execution time is several times faster and memory use is reduced. The code is compatible with Python 3, but using Python 3.3.2 incurs a major decrease in performance; the case is likely to be similar in with other Python 3 versions.</p>
 
 <h1>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
 
 <p>A simple usage example is included in examplencpol.py. A more sophisticated application is given in hamiltonian.py, which implements the Hamiltonian of a fermionic system in a 2D grid.</p>
 
-<p>Using Pypy is recommended, as execution time is several times faster and memory use is reduced.</p>
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>Follow the standard procedure for installing Python modules:</p>
+
+<pre><code>$ sudo python_interpreter setup.py install
+</code></pre>
+
+<p>If you install the module to your CPython library, but you want to use Pypy, please ensure that the PYTHONPATH variable is set up correctly, otherwise Pypy will not find the relevant modules.</p>
       </section>
     </div>
 
