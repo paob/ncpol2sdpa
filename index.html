@@ -43,15 +43,14 @@
 <h1>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
-<p>The code requires <a href="http://sympy.org/">SymPy</a>&gt;=0.7.2 in the Python search path. The code is known to work with Python 2.6.8 and 2.7.5, and also with Pypy 1.8 and 2.0.2. Using Pypy is highly recommended, as execution time is several times faster and memory use is reduced. The code is compatible with Python 3, but using Python 3.3.2 incurs a major decrease in performance; the case is likely to be similar in with other Python 3 versions.</p>
+<p>The code requires <a href="http://sympy.org/">SymPy</a>=0.7.2 and <a href="http://scipy.org/">SciPy</a>=0.13 in the Python search path. The code is compatible with Python 3, but using it incurs a major decrease in performance. Note that since SciPy is now a dependency, Pypy is no longer supported.</p>
 
 <h1>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
 
 <p>The following code replicates the toy example from Pironio, S.; Navascues, M. &amp; Acin, A. Convergent relaxations of polynomial optimization problems with noncommuting variables SIAM Journal on Optimization, SIAM, 2010, 20, 2157-2180.</p>
 
-<pre><code>from ncpol2sdpa.ncutils import generate_variables
-from ncpol2sdpa.sdprelaxation import SdpRelaxation
+<pre><code>from ncpol2sdpa import generate_variables, SdpRelaxation
 
 # Number of Hermitian variables
 n_vars = 2
@@ -88,15 +87,13 @@ sdpRelaxation.write_to_sdpa('examplenc.dat-s')
 
 <p>The code is available on PyPI, hence it can be installed by </p>
 
-<pre><code>$ sudo pip install somoclu
+<pre><code>$ sudo pip install ncpol2sdpa
 </code></pre>
 
 <p>If you want the latest git version, follow the standard procedure for installing Python modules:</p>
 
-<pre><code>$ sudo python_interpreter setup.py install
+<pre><code>$ sudo python setup.py install
 </code></pre>
-
-<p>If you install the module to your CPython library, but you want to use Pypy, please ensure that the PYTHONPATH variable is set up correctly, otherwise Pypy will not find the relevant modules.</p>
 
 <h1>
 <a name="acknowledgment" class="anchor" href="#acknowledgment"><span class="octicon octicon-link"></span></a>Acknowledgment</h1>
