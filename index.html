@@ -2,9 +2,9 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Ncpol2sdpa : A converter from noncommutative polynomial optimization problems to sparse SDPA input format " />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Ncpol2sdpa : A converter from noncommutative polynomial optimization problems to sparse SDPA input format ">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -32,30 +32,30 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a name="ncpol2sdpa" class="anchor" href="#ncpol2sdpa"><span class="octicon octicon-link"></span></a>Ncpol2sdpa</h1>
+<a id="ncpol2sdpa" class="anchor" href="#ncpol2sdpa" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ncpol2sdpa</h1>
 
-<p>Ncpol2sdpa is a set of scripts to convert a polynomial optimization problem of either commutative or noncommutative variables to a sparse semidefinite programming (SDP) problem that can be processed by the <a href="http://sdpa.sourceforge.net/">SDPA</a> family of solvers. The optimization problem can be unconstrained or constrained by equalities and inequalities.</p>
+<p>Ncpol2sdpa is a set of scripts to convert a polynomial optimization problem of either commutative or noncommutative variables to a sparse semidefinite programming (SDP) problem that can be processed by the <a href="http://sdpa.sourceforge.net">SDPA</a> family of solvers or further processed by <a href="http://picos.zib.de">PICOS</a> to solve the problem by <a href="http://cvxopt.org">CVXOPT</a> or <a href="http://www.mosek.com">MOSEK</a>. The optimization problem can be unconstrained or constrained by equalities and inequalities.</p>
 
 <p>The objective is to be able to solve very large scale optimization problems. For example, a convergent series of lower bounds can be obtained for ground state problems with arbitrary Hamiltonians.</p>
 
 <p>The implementation has an intuitive syntax for entering Hamiltonians and it scales for a larger number of noncommutative variables using a sparse representation of the SDP problem. </p>
 
 <h1>
-<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
-<p>The code requires <a href="http://sympy.org/">SymPy</a>=0.7.2 and <a href="http://scipy.org/">SciPy</a>=0.13 in the Python search path. The code is compatible with Python 3, but using it incurs a major decrease in performance. Note that since SciPy is now a dependency, Pypy is no longer supported.</p>
+<p>The code requires <a href="http://sympy.org">SymPy</a>&gt;=0.7.2 and <a href="http://scipy.org">SciPy</a>&gt;=0.13 in the Python search path. The code is compatible with Python 3, but using it incurs a major decrease in performance. Note that since SciPy is now a dependency, Pypy is no longer supported.</p>
 
 <h1>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
 
 <p>The following code replicates the toy example from Pironio, S.; Navascues, M. &amp; Acin, A. Convergent relaxations of polynomial optimization problems with noncommuting variables SIAM Journal on Optimization, SIAM, 2010, 20, 2157-2180.</p>
 
-<pre><code>from ncpol2sdpa import generate_variables, SdpRelaxation
+<pre><code>from ncpol2sdpa import generate_variables, SdpRelaxation, write_to_sdpa
 
 # Number of Hermitian variables
 n_vars = 2
-# Order of relaxation
-order = 2
+# Level of relaxation
+level = 2
 
 # Get Hermitian variables
 X = generate_variables(n_vars, hermitian=True)
@@ -76,14 +76,14 @@ monomial_substitution[X[0] ** 2] = X[0]
 # Obtain SDP relaxation
 sdpRelaxation = SdpRelaxation(X)
 sdpRelaxation.get_relaxation(obj, inequalities, equalities,
-                             monomial_substitution, order)
-sdpRelaxation.write_to_sdpa('examplenc.dat-s')
+                             monomial_substitution, level)
+write_to_sdpa(sdpRelaxation, 'examplenc.dat-s')
 </code></pre>
 
-<p>Further examples are under the examples folder.</p>
+<p>Further examples are in the examples folder and also in the manual.</p>
 
 <h1>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>The code is available on PyPI, hence it can be installed by </p>
 
@@ -96,12 +96,12 @@ sdpRelaxation.write_to_sdpa('examplenc.dat-s')
 </code></pre>
 
 <h1>
-<a name="acknowledgment" class="anchor" href="#acknowledgment"><span class="octicon octicon-link"></span></a>Acknowledgment</h1>
+<a id="acknowledgment" class="anchor" href="#acknowledgment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Acknowledgment</h1>
 
-<p>This work is supported by the European Commission Seventh Framework Programme under Grant Agreement Number FP7-601138 <a href="http://pericles-project.eu/">PERICLES</a>, by the <a href="http://www.bsc.es/RES">Red Española de Supercomputación</a> grants number FI-2013-1-0008 and  FI-2013-3-0004, and by the <a href="http://www.snic.se/">Swedish National Infrastructure for Computing</a> project number SNIC 2014/2-7.</p>
+<p>This work is supported by the European Commission Seventh Framework Programme under Grant Agreement Number FP7-601138 <a href="http://pericles-project.eu">PERICLES</a>, by the <a href="http://www.bsc.es/RES">Red Espanola de Supercomputacion</a> grants number FI-2013-1-0008 and  FI-2013-3-0004, and by the <a href="http://www.snic.se">Swedish National Infrastructure for Computing</a> project number SNIC 2014/2-7.</p>
 
 <h1>
-<a name="more-information" class="anchor" href="#more-information"><span class="octicon octicon-link"></span></a>More Information</h1>
+<a id="more-information" class="anchor" href="#more-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>More Information</h1>
 
 <p>For more information refer to the following manuscript:</p>
 
