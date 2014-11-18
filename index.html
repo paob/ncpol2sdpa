@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Ncpol2sdpa : A converter from noncommutative polynomial optimization problems to sparse SDPA input format ">
+    <meta name="description" content="Ncpol2sdpa : A converter from noncommutative polynomial optimization problems to sparse SDP input format ">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/peterwittek/ncpol2sdpa">View on GitHub</a>
 
           <h1 id="project_title">Ncpol2sdpa</h1>
-          <h2 id="project_tagline">A converter from noncommutative polynomial optimization problems to sparse SDPA input format </h2>
+          <h2 id="project_tagline">A converter from noncommutative polynomial optimization problems to sparse SDP input format </h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/peterwittek/ncpol2sdpa/zipball/master">Download this project as a .zip file</a>
@@ -34,11 +34,18 @@
         <h1>
 <a id="ncpol2sdpa" class="anchor" href="#ncpol2sdpa" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ncpol2sdpa</h1>
 
-<p>Ncpol2sdpa is a set of scripts to convert a polynomial optimization problem of either commutative or noncommutative variables to a sparse semidefinite programming (SDP) problem that can be processed by the <a href="http://sdpa.sourceforge.net">SDPA</a> family of solvers or further processed by <a href="http://picos.zib.de">PICOS</a> to solve the problem by <a href="http://cvxopt.org">CVXOPT</a> or <a href="http://www.mosek.com">MOSEK</a>. The optimization problem can be unconstrained or constrained by equalities and inequalities.</p>
+<p>Ncpol2sdpa is a set of scripts to convert a polynomial optimization problem of either commutative or noncommutative variables to a sparse semidefinite programming (SDP) problem that can be processed by the <a href="http://sdpa.sourceforge.net">SDPA</a> family of solvers, <a href="http://www.mosek.com">MOSEK</a>, or further processed by <a href="http://picos.zib.de">PICOS</a> to solve the problem by <a href="http://cvxopt.org">CVXOPT</a>. The optimization problem can be unconstrained or constrained by equalities and inequalities.</p>
 
-<p>The objective is to be able to solve very large scale optimization problems. For example, a convergent series of lower bounds can be obtained for ground state problems with arbitrary Hamiltonians.</p>
+<p>The objective is to be able to solve very large scale optimization problems. Example applications include:</p>
 
-<p>The implementation has an intuitive syntax for entering Hamiltonians and it scales for a larger number of noncommutative variables using a sparse representation of the SDP problem. </p>
+<ul>
+<li>Ground-state energy problems: bosonic and fermionic systems, Pauli spin 
+operators.</li>
+<li>Maximum quantum violation of Bell inequalities.</li>
+<li>Nieto-Silleras-type hierarchy for quantifying randomness.</li>
+</ul>
+
+<p>The implementation has an intuitive syntax for entering problems and it scales for a larger number of noncommutative variables using a sparse representation of the SDP problem. </p>
 
 <h1>
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h1>
