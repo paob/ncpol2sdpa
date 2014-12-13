@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Examples &mdash; Ncpol2sdpa 1.5 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Ncpol2sdpa 1.5 documentation" href="index.html"/>
+        <link rel="next" title="Revision History" href="revision_history.html"/>
+        <link rel="prev" title="Download and Installation" href="download.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Ncpol2sdpa</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download and Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="download.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-1-toy-example">Example 1: Toy Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-2-using-mosek-or-picos">Example 2: Using MOSEK or PICOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-3-mixed-level-relaxation-of-a-bell-inequality">Example 3: Mixed-Level Relaxation of a Bell Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-4-bosonic-system">Example 4: Bosonic System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-5-using-the-nieto-silleras-hierarchy">Example 5: Using the Nieto-Silleras Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-6-using-the-moroder-hierarchy">Example 6: Using the Moroder Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-7-sparse-relaxation-with-chordal-extension">Example 7: Sparse Relaxation with Chordal Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa-picos-and-mosek">Functions to Work with SDPA, PICOS, and MOSEK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Ncpol2sdpa</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Examples</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>The implementation follows an object-oriented design. The core object is
+SdpRelaxation. There are three steps to generate the relaxation:</p>
+<ul class="simple">
+<li>Instantiate the SdpRelaxation object.</li>
+<li>Get the relaxation.</li>
+<li>Write the relaxation to a file or solve the problem.</li>
+</ul>
+<p>The second step is the most time consuming, often running for hours as
+the number of variables increases.</p>
+<p>To instantiate the SdpRelaxation object, you need to specify the
+noncommuting variables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">X</span> <span class="o">=</span> <span class="o">...</span> <span class="c"># Define noncommuting variables</span>
+<span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Getting the relaxation requires at least the level of relaxation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will generate the moment matrix. Additional elements of the
+problem, such as the objective function, inequalities, equalities, and
+bounds on the variables.</p>
+<p>The last step in is to write out the relaxation to a sparse SDPA file.
+The method (<tt class="docutils literal"><span class="pre">write_to_sdpa</span></tt>) takes one parameter, the file name.
+Alternatively, if SDPA is in the search path, then it can be solved by
+invoking a helper function (<tt class="docutils literal"><span class="pre">solve_sdp</span></tt>). Alternatively, MOSEK is
+also supported for writing a problem and solving it. Using a converter
+to PICOS, it is also possible to solve the problem with a range of
+other solvers, including CVXOPT.</p>
+<div class="section" id="example-1-toy-example">
+<h2>Example 1: Toy Example<a class="headerlink" href="#example-1-toy-example" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following polynomial optimization problem&nbsp;(Pironio,
+Navascués, and Acín 2010):</p>
+<div class="math">
+\[\min_{x\in \mathbb{R}^2}x_1x_2+x_2x_1\]</div>
+<p>such that</p>
+<div class="math">
+\[-x_2^2+x_2+0.5\geq 0\]</div>
+<div class="math">
+\[x_1^2-x_1=0.\]</div>
+<p>Entering the objective function and the inequality constraint is easy.
+The equality constraint is a simple projection. We either substitute two
+inequalities to replace the equality, or treat the equality as a
+monomial substitution. The second option leads to a sparser SDP
+relaxation. The code samples below take this approach. In this case, the
+monomial basis is <span class="math">\(\{1, x_1, x_2, x_1x_2, x_2x_1, x_2^2\}\)</span>. The
+corresponding relaxation is written as</p>
+<div class="math">
+\[\min_{y}y_{12}+y_{21}\]</div>
+<p>such that</p>
+<div class="math">
+\[\begin{split}\left[\begin{array}{c|cc|ccc}
+1 &amp; y_{1} &amp; y_{2} &amp; y_{12} &amp; y_{21} &amp; y_{22}\\
+\hline{}
+y_{1} &amp; y_{1} &amp; y_{12} &amp; y_{12} &amp; y_{121} &amp; y_{122}\\
+y_{2} &amp; y_{21} &amp; y_{22} &amp; y_{212} &amp; y_{221} &amp; y_{222}\\
+\hline{}
+y_{21} &amp; y_{21} &amp; y_{212} &amp; y_{212} &amp; y_{2121} &amp; y_{2122} \\
+y_{12} &amp; y_{121} &amp; y_{122} &amp; y_{1212} &amp; y_{1221} &amp; y_{1222}\\
+y_{22} &amp; y_{221} &amp; y_{222} &amp; y_{2212} &amp; y_{2221} &amp; y_{2222}
+\end{array} \right] \succeq{}0\end{split}\]</div>
+<div class="math">
+\[\begin{split}\left[ \begin{array}{c|cc}
+-y_{22}+y_{2}+0.5 &amp; -y_{221}+y_{21}+0.5y_{1} &amp; -y_{222}+y_{22}+0.5y_{2}\\
+\hline{}
+-y_{221}+y_{21}+0.5y_{1} &amp; -y_{1221}+y_{121}+0.5y_{1} &amp; -y_{1222}+y_{122}+0.5y_{12}\\
+-y_{222}+y_{22}+0.5y_{2} &amp; -y_{1222}+y_{122}+0.5y_{12} &amp; -y_{2222}+y_{222}+0.5y_{22}
+\end{array}\right]\succeq{}0.\end{split}\]</div>
+<p>Apart from the matrices being symmetric, notice other regular patterns
+between the elements. These are taken care of as additional constraints
+in the implementation. The optimum for the objective function is
+<span class="math">\(-3/4\)</span>. The implementation reads as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ncpol2sdpa</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c"># Number of Hermitian variables</span>
+<span class="n">n_vars</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="c"># Level of relaxation</span>
+<span class="n">level</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c"># Get Hermitian variables</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">generate_variables</span><span class="p">(</span><span class="n">n_vars</span><span class="p">,</span> <span class="n">hermitian</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Define the objective function</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># Inequality constraints</span>
+<span class="n">inequalities</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">]</span>
+
+<span class="c"># Simple monomial substitutions</span>
+<span class="n">monomial_substitution</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">monomial_substitution</span><span class="p">[</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># Obtain SDP relaxation</span>
+<span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">inequalities</span><span class="o">=</span><span class="n">inequalities</span><span class="p">,</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">monomial_substitution</span><span class="p">)</span>
+<span class="n">write_to_sdpa</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="s">&#39;examplenc.dat-s&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Any flavour of the SDPA family of solvers will solve the exported
+problem:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sdpa examplenc.dat-s examplenc.out
+</pre></div>
+</div>
+<p>If the SDPA solver is in the search path, we can invoke the solver from
+Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">primal</span><span class="p">,</span> <span class="n">dual</span> <span class="o">=</span> <span class="n">solve_sdp</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The relevant part of the output shows the optimum for the objective
+function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">objValPrimal</span> <span class="o">=</span> <span class="o">-</span><span class="mf">7.5000001721851994e-01</span>
+<span class="n">objValDual</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">7.5000007373829902e-01</span>
+</pre></div>
+</div>
+<p>This is close to the analytical optimum of <span class="math">\(-3/4\)</span>.</p>
+</div>
+<div class="section" id="example-2-using-mosek-or-picos">
+<h2>Example 2: Using MOSEK or PICOS<a class="headerlink" href="#example-2-using-mosek-or-picos" title="Permalink to this headline">¶</a></h2>
+<p>Apart from SDPA, MOSEK also enjoys full support. Using the preliminaries
+of the problem outlined in Section&nbsp;[example1], once we have the
+relaxation, we can convert it to a MOSEK task and solve it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">task</span> <span class="o">=</span> <span class="n">convert_to_mosek</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">)</span>
+<span class="n">task</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+<span class="n">task</span><span class="o">.</span><span class="n">solutionsummary</span><span class="p">(</span><span class="n">mosek</span><span class="o">.</span><span class="n">streamtype</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Please ensure that the MOSEK installation is operational.</p>
+<p>A compatibility layer with PICOS allows calling a wider ranger of
+solvers. Assuming that the PICOS dependencies are in <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>, we
+can pass an argument to the function <tt class="docutils literal"><span class="pre">get_relaxation</span></tt> to generate a
+PICOS optimization problem. Using the same example as before, we change
+the relevant function call to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">P</span> <span class="o">=</span> <span class="n">convert_to_picos</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This returns a PICOS problem, and with that, we can solve it with any
+solver that PICOS supports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">P</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-3-mixed-level-relaxation-of-a-bell-inequality">
+<h2>Example 3: Mixed-Level Relaxation of a Bell Inequality<a class="headerlink" href="#example-3-mixed-level-relaxation-of-a-bell-inequality" title="Permalink to this headline">¶</a></h2>
+<p>It is often the case that moving to a higher-order relaxation is
+computationally prohibitive. For these cases, it is possible to inject
+extra monomials to a lower level relaxation. We refer to this case as a
+mixed-level relaxation.</p>
+<p>As an example, we consider the CHSH inequality in the probability
+picture at level 1+AB relaxation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">A_configuration</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">B_configuration</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">I</span> <span class="o">=</span> <span class="p">[[</span> <span class="mi">0</span><span class="p">,</span>   <span class="o">-</span><span class="mi">1</span><span class="p">,</span>    <span class="mi">0</span> <span class="p">],</span>
+     <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span>    <span class="mi">1</span> <span class="p">],</span>
+     <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span>   <span class="o">-</span><span class="mi">1</span> <span class="p">]]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">monomial_substitutions</span> <span class="o">=</span> <span class="n">projective_measurement_constraints</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="n">objective</span> <span class="o">=</span> <span class="n">define_objective_with_I</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then we need to generate the monomials we would like to add to the
+relaxation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AB</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ai</span><span class="o">*</span><span class="n">Bj</span> <span class="k">for</span> <span class="n">Ai</span> <span class="ow">in</span> <span class="n">flatten</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="k">for</span> <span class="n">Bj</span> <span class="ow">in</span> <span class="n">flatten</span><span class="p">(</span><span class="n">B</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>We have to tell when we ask for the relaxation that these extra
+monomials should be considered:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">(</span><span class="n">flatten</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">]))</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">monomial_substitutions</span><span class="p">,</span>
+                             <span class="n">extramonomials</span><span class="o">=</span><span class="n">AB</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-4-bosonic-system">
+<h2>Example 4: Bosonic System<a class="headerlink" href="#example-4-bosonic-system" title="Permalink to this headline">¶</a></h2>
+<p>The system Hamiltonian describes <span class="math">\(N\)</span> harmonic oscillators with a
+parameter <span class="math">\(\omega\)</span>. It is the result of second quantization and it
+is subject to bosonic constraints on the ladder operators <span class="math">\(a_{k}\)</span>
+and <span class="math">\(a_{k}^{\dagger}\)</span> (see, for instance, Section&nbsp;22.2 in M.
+Fayngold and Fayngold (2013)). The Hamiltonian is written as</p>
+<div class="math">
+\[H = \hbar \omega\sum_{i}\left(a_{i}^{\dagger}a_{i}+\frac{1}{2}\right).\]</div>
+<p>Here <span class="math">\(^{\dagger}\)</span> stands for the adjoint operation. The
+constraints on the ladder operators are given as</p>
+<div class="math">
+\[\begin{split}\begin{aligned}
+[a_{i},a_{j}^{\dagger}] &amp;=  \delta_{ij} \\
+[a_{i},a_{j}]  &amp;=  0 \nonumber \\
+[a_{i}^{\dagger},a_{j}^{\dagger}] &amp;=  0,\nonumber\end{aligned}\end{split}\]</div>
+<p>where <span class="math">\([.,.]\)</span> stands for the commutation operator
+<span class="math">\([a,b]=ab-ba\)</span>.</p>
+<p>Clearly, most of the constraints are monomial substitutions, except
+<span class="math">\([a_{i},a_{i}^{\dagger}]=1\)</span>, which needs to be defined as an
+equality. The Python code for generating the SDP relaxation is provided
+below. We set <span class="math">\(\omega=1\)</span>, and we also set Planck’s constant
+<span class="math">\(\hbar\)</span> to one, to obtain numerical results that are easier to
+interpret.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.physics.quantum.dagger</span> <span class="kn">import</span> <span class="n">Dagger</span>
+
+<span class="c"># level of relaxation</span>
+<span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c"># Number of variables</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c"># Parameters for the Hamiltonian</span>
+<span class="n">hbar</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+
+<span class="c"># Define ladder operators</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">generate_variables</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+
+<span class="n">hamiltonian</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">hamiltonian</span> <span class="o">+=</span> <span class="n">hbar</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="p">(</span><span class="n">Dagger</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">monomial_substitutions</span><span class="p">,</span> <span class="n">equalities</span> <span class="o">=</span> <span class="n">bosonic_constraints</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">inequalities</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Obtaining SDP relaxation...&quot;</span><span class="p">)</span>
+<span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">hamiltonian</span><span class="p">,</span>
+                             <span class="n">equalities</span><span class="o">=</span><span class="n">equalities</span><span class="p">,</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">substitutions</span><span class="p">,</span>
+                             <span class="n">removeequalities</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">write_to_sdpa</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="s">&#39;harmonic_oscillator.dat-s&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Solving the SDP for <span class="math">\(N=4\)</span>, for instance, gives the following
+result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">objValPrimal</span> <span class="o">=</span> <span class="o">+</span><span class="mf">1.9999998358414430e+00</span>
+<span class="n">objValDual</span>   <span class="o">=</span> <span class="o">+</span><span class="mf">1.9999993671869802e+00</span>
+</pre></div>
+</div>
+<p>This is very close to the analytic result of 2. The result is similarly
+precise for arbitrary numbers of oscillators.</p>
+<p>It is remarkable that we get the correct value at the first level of
+relaxation, but this property is typical for bosonic systems&nbsp;(Navascués
+et al. 2013).</p>
+</div>
+<div class="section" id="example-5-using-the-nieto-silleras-hierarchy">
+<h2>Example 5: Using the Nieto-Silleras Hierarchy<a class="headerlink" href="#example-5-using-the-nieto-silleras-hierarchy" title="Permalink to this headline">¶</a></h2>
+<p>One of the newer approaches to the SDP relaxations takes all joint
+probabilities into consideration when looking for a maximum guessing
+probability, and not just the ones included in a particular Bell
+inequality&nbsp;(Nieto-Silleras, Pironio, and Silman 2014; Bancal, Sheridan,
+and Scarani 2014). Ncpol2sdpa can generate the respective hierarchy.</p>
+<p>To deal with the joint probabilities necessary for setting constraints,
+we also rely on QuTiP&nbsp;(Johansson, Nation, and Nori 2013):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">sigmax</span><span class="p">,</span> <span class="n">sigmay</span><span class="p">,</span> <span class="n">expect</span><span class="p">,</span> <span class="n">qeye</span>
+</pre></div>
+</div>
+<p>We will work in a CHSH scenario where we are trying to find the maximum
+guessing probability of the first projector of Alice’s first
+measurement. We generate the joint probability distribution on the
+maximally entangled state with the measurements that give the maximum
+quantum violation of the CHSH inequality:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">joint_probabilities</span><span class="p">():</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="o">+</span>
+           <span class="n">tensor</span><span class="p">(</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">unit</span><span class="p">()</span>
+    <span class="n">A_0</span> <span class="o">=</span> <span class="n">sigmax</span><span class="p">()</span>
+    <span class="n">A_1</span> <span class="o">=</span> <span class="n">sigmay</span><span class="p">()</span>
+    <span class="n">B_0</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">sigmay</span><span class="p">()</span><span class="o">+</span><span class="n">sigmax</span><span class="p">())</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">B_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigmay</span><span class="p">()</span><span class="o">+</span><span class="n">sigmax</span><span class="p">())</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">A_00</span> <span class="o">=</span> <span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">A_0</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">A_10</span> <span class="o">=</span> <span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">A_1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">B_00</span> <span class="o">=</span> <span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">B_0</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">B_10</span> <span class="o">=</span> <span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">B_1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="n">p</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">A_00</span><span class="p">,</span> <span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">A_10</span><span class="p">,</span> <span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">B_00</span><span class="p">),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">B_10</span><span class="p">),</span> <span class="n">psi</span><span class="p">))</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">A_00</span><span class="p">,</span> <span class="n">B_00</span><span class="p">),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">A_00</span><span class="p">,</span> <span class="n">B_10</span><span class="p">),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">A_10</span><span class="p">,</span> <span class="n">B_00</span><span class="p">),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expect</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">A_10</span><span class="p">,</span> <span class="n">B_10</span><span class="p">),</span> <span class="n">psi</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>Next we need the basic configuration of the projectors. We also set the
+level of the SDP relaxation and the objective.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">A_configuration</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">B_configuration</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">P_A</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">,</span> <span class="s">&#39;P_A&#39;</span><span class="p">)</span>
+<span class="n">P_B</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">,</span> <span class="s">&#39;P_B&#39;</span><span class="p">)</span>
+<span class="n">monomial_substitutions</span> <span class="o">=</span> <span class="n">projective_measurement_constraints</span><span class="p">(</span>
+    <span class="n">P_A</span><span class="p">,</span> <span class="n">P_B</span><span class="p">)</span>
+<span class="n">objective</span> <span class="o">=</span> <span class="o">-</span><span class="n">P_A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We must define further constraints, namely that the joint probabilities
+must match:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">probabilities</span> <span class="o">=</span> <span class="n">joint_probabilities</span><span class="p">()</span>
+<span class="n">equalities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">k</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">)):</span>
+    <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">)):</span>
+    <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">)):</span>
+        <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">P_B</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>From here, the solution follows the usual pathway, indicating that we
+are requesting the Nieto-Silleras hierarchy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">([</span><span class="n">flatten</span><span class="p">([</span><span class="n">P_A</span><span class="p">,</span> <span class="n">P_B</span><span class="p">])],</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                               <span class="n">hierarchy</span><span class="o">=</span><span class="s">&quot;nieto-silleras&quot;</span><span class="p">)</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+                             <span class="n">equalities</span><span class="o">=</span><span class="n">equalities</span><span class="p">,</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">monomial_substitutions</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">solve_sdp</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-6-using-the-moroder-hierarchy">
+<h2>Example 6: Using the Moroder Hierarchy<a class="headerlink" href="#example-6-using-the-moroder-hierarchy" title="Permalink to this headline">¶</a></h2>
+<p>This type of hierarchy allows for a wider range of constraints of the
+optimization problems, including ones that are not of polynomial
+form&nbsp;(Moroder et al. 2013). These constraints are hard to impose using
+SymPy and the sparse structures in Ncpol2Sdpa. For this reason, we
+separate two steps: generating the SDP and post-processing the SDP to
+impose extra constraints. This second step can be done in MATLAB, for
+instance.</p>
+<p>Then we set up the problem with specifically with the CHSH inequality in
+the probability picture as the objective function. This part is
+identical to the one discussed in Section&nbsp;[mixedlevel].</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">A_configuration</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">B_configuration</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">I</span> <span class="o">=</span> <span class="p">[[</span> <span class="mi">0</span><span class="p">,</span>   <span class="o">-</span><span class="mi">1</span><span class="p">,</span>    <span class="mi">0</span> <span class="p">],</span>
+     <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span>    <span class="mi">1</span> <span class="p">],</span>
+     <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span>   <span class="o">-</span><span class="mi">1</span> <span class="p">]]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">)</span>
+<span class="n">monomial_substitutions</span> <span class="o">=</span> <span class="n">projective_measurement_constraints</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="n">objective</span> <span class="o">=</span> <span class="n">define_objective_with_I</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When obtaining the relaxation for this kind of problem, it can prove
+useful to disable the normalization of the top-left element of the
+moment matrix. Naturally, before solving the problem this should be set
+to zero, but further processing of the SDP matrix can be easier without
+this constraint set a priori. Hence we write:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">([</span><span class="n">flatten</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">flatten</span><span class="p">(</span><span class="n">B</span><span class="p">)],</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                               <span class="n">hierarchy</span><span class="o">=</span><span class="s">&quot;moroder&quot;</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">monomial_substitutions</span><span class="p">)</span>
+<span class="n">write_to_sdpa</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="s">&quot;chsh-moroder.dat-s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For instance, reading this file with SeDuMi’s <tt class="docutils literal"><span class="pre">fromsdpa</span></tt>
+function&nbsp;(Sturm 1999), we can impose the positivity of the partial trace
+of the moment matrix, or decompose the moment matrix in various forms.</p>
+</div>
+<div class="section" id="example-7-sparse-relaxation-with-chordal-extension">
+<h2>Example 7: Sparse Relaxation with Chordal Extension<a class="headerlink" href="#example-7-sparse-relaxation-with-chordal-extension" title="Permalink to this headline">¶</a></h2>
+<p>This method replicates the behaviour of SparsePOP (Waki et. al, 2008). It is
+invoked by defining the hierarchy as <tt class="docutils literal"><span class="pre">&quot;npa_chordal&quot;</span></tt>. The following is a
+simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">level</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">generate_variables</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">commutative</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">inequalities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">hierarchy</span><span class="o">=</span><span class="s">&quot;npa_chordal&quot;</span><span class="p">)</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">inequalities</span><span class="o">=</span><span class="n">inequalities</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">solve_sdp</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>Bancal, Jean-Daniel, Lana Sheridan, and Valerio Scarani. 2014. “More
+Randomness from the Same Data.” <em>New Journal of Physics</em> 16 (3): 033011.
+doi:<a class="reference external" href="http://dx.doi.org/10.1088/1367-2630/16/3/033011">10.1088/1367-2630/16/3/033011</a>.</p>
+<p>Fayngold, M., and V. Fayngold. 2013. <em>Quantum Mechanics and Quantum
+Information</em>. Wiley-VCH.</p>
+<p>Johansson, J.R., P.D. Nation, and Franco Nori. 2013. “QuTiP 2: A Python
+Framework for the Dynamics of Open Quantum Systems.” <em>Computer Physics
+Communications</em> 184 (4): 1234–40.
+doi:<a class="reference external" href="http://dx.doi.org/10.1016/j.cpc.2012.11.019">10.1016/j.cpc.2012.11.019</a>.</p>
+<p>Moroder, Tobias, Jean-Daniel Bancal, Yeong-Cherng Liang, Martin Hofmann,
+and Otfried Gühne. 2013. “Device-Independent Entanglement Quantification
+and Related Applications.” <em>Physics Review Letters</em> 111 (3). American
+Physical Society: 030501.
+doi:<a class="reference external" href="http://dx.doi.org/10.1103/PhysRevLett.111.030501">10.1103/PhysRevLett.111.030501</a>.</p>
+<p>Navascués, M., A. García-Sáez, A. Acín, S. Pironio, and M.B. Plenio.
+2013. “A Paradox in Bosonic Energy Computations via Semidefinite
+Programming Relaxations.” <em>New Journal of Physics</em> 15 (2): 023026.
+doi:<a class="reference external" href="http://dx.doi.org/10.1088/1367-2630/15/2/023026">10.1088/1367-2630/15/2/023026</a>.</p>
+<p>Nieto-Silleras, O., S. Pironio, and J. Silman. 2014. “Using Complete
+Measurement Statistics for Optimal Device-Independent Randomness
+Evaluation.” <em>New Journal of Physics</em> 16 (1): 013035.
+doi:<a class="reference external" href="http://dx.doi.org/10.1088/1367-2630/16/1/013035">10.1088/1367-2630/16/1/013035</a>.</p>
+<p>Pironio, S., M. Navascués, and A. Acín. 2010. “Convergent Relaxations of
+Polynomial Optimization Problems with Noncommuting Variables.” <em>SIAM
+Journal on Optimization</em> 20 (5). SIAM: 2157–80.
+doi:<a class="reference external" href="http://dx.doi.org/10.1137/090760155">10.1137/090760155</a>.</p>
+<p>Sturm, J.F. 1999. “Using SeDuMi 1.02, a MATLAB Toolbox for Optimization
+over Symmetric Cones.” <em>Optimization Methods and Software</em> 11 (1-4):
+625–53.</p>
+<p>Waki, H.; S. Kim, M. Kojima, M. Muramatsu, and H. Sugimoto. 2008. “Algorithm 883: SparsePOP&#8212;A Sparse Semidefinite Programming Relaxation of Polynomial Optimization Problems.” ACM Transactions on Mathematical Software, 2008, 35(2), 15.
+doi:<a class="reference external" href="http://dx.doi.org/10.1145/1377612.1377619">10.1145/1377612.1377619</a>.</p>
+<p>Yamashita, M., K. Fujisawa, and M. Kojima. 2003. “SDPARA: Semidefinite
+Programming Algorithm Parallel Version.” <em>Parallel Computing</em> 29 (8):
+1053–67.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="revision_history.html" class="btn btn-neutral float-right" title="Revision History">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="download.html" class="btn btn-neutral" title="Download and Installation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Peter Wittek.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

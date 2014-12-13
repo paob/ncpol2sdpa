@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Revision History &mdash; Ncpol2sdpa 1.5 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Ncpol2sdpa 1.5 documentation" href="index.html"/>
+        <link rel="next" title="Function Reference" href="reference.html"/>
+        <link rel="prev" title="Examples" href="exampleshtml.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Ncpol2sdpa</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download and Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="download.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="download.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exampleshtml.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-toy-example">Example 1: Toy Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-using-mosek-or-picos">Example 2: Using MOSEK or PICOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-mixed-level-relaxation-of-a-bell-inequality">Example 3: Mixed-Level Relaxation of a Bell Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-bosonic-system">Example 4: Bosonic System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-nieto-silleras-hierarchy">Example 5: Using the Nieto-Silleras Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-using-the-moroder-hierarchy">Example 6: Using the Moroder Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-7-sparse-relaxation-with-chordal-extension">Example 7: Sparse Relaxation with Chordal Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Revision History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa-picos-and-mosek">Functions to Work with SDPA, PICOS, and MOSEK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Ncpol2sdpa</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Revision History</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="revision-history">
+<h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this headline">¶</a></h1>
+<p><strong>Since version 1.5</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Syntax for passing parameters changed. Only the level of the relaxation is
+compulsory for obtaining a relaxation.</li>
+<li>Extra parameter for bounds on the variables was added. Syntax is identical
+to the inequalities. The difference is that the inequalities in the bounds
+will not be relaxed by localizing matrices.</li>
+<li>Extra parameter for passing additional variables to the Nieto-Silleras
+hierarchy. This is important because the top-left element of the blocks of
+moment matrices in the relaxation is not one: they add up to one. Hence
+specifying the last element of a measurement becomes possible with this
+option.</li>
+<li>Support for chordal graph extension in the commutative case
+(doi:<a class="reference external" href="http://dx.doi.org/10.1137/050623802">10.1137/050623802</a>). Pass <tt class="docutils literal"><span class="pre">hierarchy=&quot;npa_chordal&quot;</span></tt> to the constructor.</li>
+<li>PICOS conversion routines were separated.</li>
+<li>Moved documentation to Sphinx.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.5 (2014-11-27)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Support for Moroder hierarchy (doi:<a class="reference external" href="http://dx.doi.org/10.1103/PhysRevLett.111.030501">10.1103/PhysRevLett.111.030501</a>).</li>
+<li>Further symmetries are discovered when all variables are Hermitian.</li>
+<li>Normalization can be turned off.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.4 (2014-11-18)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Pypy support restored with limitations.</li>
+<li>Direct export to and optimization by MOSEK.</li>
+<li>Added helper function to add constraints on Pauli operators.</li>
+<li>Handling of complex coefficients improved.</li>
+<li>Added PICOS compatibility layer, enabling solving a problem by a larger range of solvers.</li>
+<li>Bug fixes: Python 3 compatibility restored.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.3 (2014-11-03)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Much smaller SDPs are generated when using the helper functions for quantum correlations by not considering the last projector in the measurements and thus removing the sum-to-identity constraint; positive semidefinite condition is not influenced by this.</li>
+<li>Helper functions for fermionic systems and projective measurements are simplified.</li>
+<li>Support for the Nieto-Silleras (doi:<a class="reference external" href="http://dx.doi.org/10.1088/1367-2630/16/1/013035">10.1088/1367-2630/16/1/013035</a>) hierarchy for level 1+ relaxations.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.2.4 (2014-06-13)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Bug fixes: mixed commutative and noncommutative variable monomials are handled correctly in substitutions, constant integer objective functions are accepted.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.2.3 (2014-06-04)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>CHSH inequality added as an example.</li>
+<li>Allows supplying extra monomials to a given level of relaxation.</li>
+<li>Added functions to make it easier to work with Bell inequalities.</li>
+<li>Bug fixes: constant separation works correctly for integers, max-cut example fixed.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.2.2 (2014-05-27)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Much faster SDPA writer for problems with many blocks.</li>
+<li>Removal of equalities does not happen by default.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.2.1 (2014-05-22)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Size of localizing matrices adjusts to individual inequalities.</li>
+<li>Internal structure for storing monomials reorganized.</li>
+<li>Checks for maximum order in the constraints added.</li>
+<li>Fermionic constraints corrected.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.2 (2014-05-16)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Fast replace was updated and made default.</li>
+<li>Numpy and SciPy are now dependencies.</li>
+<li>Replaced internal data structures by SciPy sparse matrices.</li>
+<li>Pypy is no longer supported.</li>
+<li>Equality constraints are removed by a QR decomposition and basis transformation.</li>
+<li>Functions added to support calling SDPA from Python.</li>
+<li>Helper functions added to help phrasing physics problems.</li>
+<li>More commutative examples added for comparison to Gloptipoly.</li>
+<li>Internal module structure reorganized.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.1 (2014-05-12)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Commutative variables also work.</li>
+<li>Major rework of how the moment matrix is generated.</li>
+</ul>
+</div></blockquote>
+<p><strong>Version 1.0 (2014-04-29)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Initial release.</li>
+</ul>
+</div></blockquote>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference.html" class="btn btn-neutral float-right" title="Function Reference">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exampleshtml.html" class="btn btn-neutral" title="Examples"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Peter Wittek.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
