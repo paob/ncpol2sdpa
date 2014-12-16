@@ -119,7 +119,7 @@
 <h2>SdpRelaxation Class<a class="headerlink" href="#sdprelaxation-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="ncpol2sdpa.SdpRelaxation">
-<em class="property">class </em><tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">SdpRelaxation</tt><big>(</big><em>variables</em>, <em>verbose=0</em>, <em>hierarchy='npa'</em>, <em>normalized=True</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">SdpRelaxation</tt><big>(</big><em>variables</em>, <em>nonrelaxed=None</em>, <em>verbose=0</em>, <em>hierarchy='npa'</em>, <em>normalized=True</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for obtaining sparse SDP relaxation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -131,6 +131,9 @@
 or a list of list.) &#8211; Commutative or noncommutative, Hermitian or nonhermiatian
 variables, possibly a list of list of variables if the
 hierarchy is not NPA.</li>
+<li><strong>nonrelaxed</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>
+or a list of list.) &#8211; Optional variables which are not to be relaxed.</li>
 <li><strong>verbose</strong> (<em>int.</em>) &#8211; <p>Optional parameter for level of verbosity:</p>
 <ul>
 <li>0: quiet</li>
@@ -495,23 +498,16 @@ conditions.</li>
 
 <dl class="function">
 <dt id="ncpol2sdpa.projective_measurement_constraints">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">projective_measurement_constraints</tt><big>(</big><em>A</em>, <em>B</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.projective_measurement_constraints" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">projective_measurement_constraints</tt><big>(</big><em>*parties</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.projective_measurement_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a set of constraints that define projective measurements.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; Measurements of Alice.</li>
-<li><strong>B</strong> (list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; Measurements of Bob.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parties</strong> &#8211; Measurements of different parties.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">substitutions containing idempotency, orthogonality and
-commutation relations.</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">substitutions containing idempotency, orthogonality and
+commutation relations.</td>
 </tr>
 </tbody>
 </table>
