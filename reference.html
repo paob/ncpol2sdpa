@@ -294,26 +294,6 @@ respectively.</p>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="ncpol2sdpa.convert_to_picos_for_export">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">convert_to_picos_for_export</tt><big>(</big><em>sdpRelaxation</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.convert_to_picos_for_export" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert an SDP relaxation to a PICOS problem in a way that PICOS cannot
-solve. The advantage is that the exported .dat-s file is extremely sparse,
-there is not penalty imposed in terms of SDP variables or number of
-constraints. This conversion can be used for imposing extra constraints
-on the moment matrix, such as partial transpose.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to convert.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">picos.Problem</span></tt>.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="functions-to-help-define-polynomial-optimization-problems">
 <h2>Functions to Help Define Polynomial Optimization Problems<a class="headerlink" href="#functions-to-help-define-polynomial-optimization-problems" title="Permalink to this headline">¶</a></h2>
