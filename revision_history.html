@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Revision History &mdash; Ncpol2sdpa 1.5 documentation</title>
+  <title>Revision History &mdash; Ncpol2sdpa 1.6 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.5 documentation" href="index.html"/>
+    <link rel="top" title="Ncpol2sdpa 1.6 documentation" href="index.html"/>
         <link rel="next" title="Function Reference" href="reference.html"/>
         <link rel="prev" title="Examples" href="exampleshtml.html"/> 
 
@@ -116,24 +116,16 @@
             
   <div class="section" id="revision-history">
 <h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this headline">¶</a></h1>
-<p><strong>Since version 1.5</strong></p>
+<p><strong>Version 1.6 (2014-12-22)</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li>Syntax for passing parameters changed. Only the level of the relaxation is
-compulsory for obtaining a relaxation.</li>
-<li>Extra parameter for bounds on the variables was added. Syntax is identical
-to the inequalities. The difference is that the inequalities in the bounds
-will not be relaxed by localizing matrices.</li>
-<li>Extra parameter for passing additional variables to the Nieto-Silleras
-hierarchy. This is important because the top-left element of the blocks of
-moment matrices in the relaxation is not one: they add up to one. Hence
-specifying the last element of a measurement becomes possible with this
-option.</li>
-<li>Support for chordal graph extension in the commutative case
-(doi:<a class="reference external" href="http://dx.doi.org/10.1137/050623802">10.1137/050623802</a>). Pass <tt class="docutils literal"><span class="pre">hierarchy=&quot;npa_chordal&quot;</span></tt> to the constructor.</li>
+<li>Syntax for passing parameters changed. Only the level of the relaxation is compulsory for obtaining a relaxation.</li>
+<li>Extra parameter for bounds on the variables was added. Syntax is identical to the inequalities. The difference is that the inequalities in the bounds will not be relaxed by localizing matrices.</li>
+<li>Support for chordal graph extension in the commutative case (doi:<a class="reference external" href="http://dx.doi.org/10.1137/050623802">10.1137/050623802</a>). Pass <tt class="docutils literal"><span class="pre">hierarchy=&quot;npa_chordal&quot;</span></tt> to the constructor.</li>
 <li>It is possible to pass variables which will not be relaxed. Pass <tt class="docutils literal"><span class="pre">nonrelaxed=[variables]</span></tt> to the constructor.</li>
 <li>It is possible to change the constraints once the moment matrix is generated. Refer to the new function <tt class="docutils literal"><span class="pre">process_constraints</span></tt>.</li>
-<li>PICOS conversion routines were separated.</li>
+<li>Extra parameter <tt class="docutils literal"><span class="pre">nsextraobjvars=[]</span></tt> was added for passing additional variables to the Nieto-Silleras hierarchy. This is important because the top-left elements of the blocks of moment matrices in the relaxation are not one: they add up to one. Hence specifying the last element of a measurement becomes possible with this option. The number of elements in this must match the number of behaviours.</li>
+<li>PICOS conversion routines were separated and reworked to ensure sparsity.</li>
 <li>Moved documentation to Sphinx.</li>
 <li>SciPy dependency made optional.</li>
 </ul>
@@ -263,7 +255,7 @@ option.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.5',
+            VERSION:'1.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
