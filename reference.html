@@ -119,7 +119,7 @@
 <h2>SdpRelaxation Class<a class="headerlink" href="#sdprelaxation-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="ncpol2sdpa.SdpRelaxation">
-<em class="property">class </em><tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">SdpRelaxation</tt><big>(</big><em>variables</em>, <em>nonrelaxed=None</em>, <em>verbose=0</em>, <em>hierarchy='npa'</em>, <em>normalized=True</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">SdpRelaxation</tt><big>(</big><em>variables</em>, <em>nonrelaxed=None</em>, <em>verbose=0</em>, <em>hierarchy='npa'</em>, <em>normalized=True</em>, <em>ppt=False</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for obtaining sparse SDP relaxation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -154,6 +154,8 @@ or a list of list.) &#8211; Optional variables which are not to be relaxed.</li>
 states over which the optimization happens. Turn it off
 if further processing is done on the SDP matrix before
 solving it.</li>
+<li><strong>ppt</strong> &#8211; Optional parameter for imposing the partial positivity
+constraint in the Moroder hierarchy.</li>
 </ul>
 </td>
 </tr>
