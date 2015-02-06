@@ -466,7 +466,7 @@ identical to the one discussed in Section&nbsp;[mixedlevel].</p>
      <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span>   <span class="o">-</span><span class="mi">1</span> <span class="p">]]</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">)</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">generate_measurements</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">)</span>
-<span class="n">monomial_substitutions</span> <span class="o">=</span> <span class="n">projective_measurement_constraints</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="n">substitutions</span> <span class="o">=</span> <span class="n">projective_measurement_constraints</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
 <span class="n">objective</span> <span class="o">=</span> <span class="n">define_objective_with_I</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -478,13 +478,29 @@ this constraint set a priori. Hence we write:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">([</span><span class="n">flatten</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">flatten</span><span class="p">(</span><span class="n">B</span><span class="p">)],</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
                                <span class="n">hierarchy</span><span class="o">=</span><span class="s">&quot;moroder&quot;</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
-                             <span class="n">substitutions</span><span class="o">=</span><span class="n">monomial_substitutions</span><span class="p">)</span>
-<span class="n">write_to_sdpa</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="s">&quot;chsh-moroder.dat-s&quot;</span><span class="p">)</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">substitutions</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For instance, reading this file with SeDuMi’s <tt class="docutils literal"><span class="pre">fromsdpa</span></tt>
-function&nbsp;(Sturm 1999), we can impose the positivity of the partial trace
-of the moment matrix, or decompose the moment matrix in various forms.</p>
+<p>We can further process the moment matrix, for instance, to impose partial positivity, or a matrix decomposition. To do these operations, we rely on PICOS:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">convert_to_picos_extra_moment_matrix</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s">&#39;Z&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">block_struct</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">block_struct</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">P</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="n">partial_transpose</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">P</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">Y</span> <span class="o">+</span> <span class="n">Z</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">P</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, with SeDuMi’s <tt class="docutils literal"><span class="pre">fromsdpa</span></tt> function&nbsp;(Sturm 1999), we can also impose the positivity of the partial trace of the moment matrix using MATLAB, or decompose the moment matrix in various forms. For this, we have to write the relaxation to a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">write_to_sdpa</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="s">&quot;chsh-moroder.dat-s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If all we need is the partial positivity of the moment matrix, that is actually nothing but an extra symmetry. We can request this condition by passing an argument to the constructor, leading to a sparser SDP:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">([</span><span class="n">flatten</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">flatten</span><span class="p">(</span><span class="n">B</span><span class="p">)],</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                               <span class="n">hierarchy</span><span class="o">=</span><span class="s">&quot;moroder&quot;</span><span class="p">,</span><span class="n">ppt</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">substitutions</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="example-7-sparse-relaxation-with-chordal-extension">
 <h2>Example 7: Sparse Relaxation with Chordal Extension<a class="headerlink" href="#example-7-sparse-relaxation-with-chordal-extension" title="Permalink to this headline">¶</a></h2>
@@ -560,7 +576,7 @@ Programming Algorithm Parallel Version.” <em>Parallel Computing</em> 29 (8):
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Peter Wittek.
+        &copy; Copyright 2015, Peter Wittek.
     </p>
   </div>
 
