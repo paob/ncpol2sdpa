@@ -146,13 +146,10 @@ or a list of list.) &#8211; Optional variables which are not to be relaxed.</li>
 <li><strong>hierarchy</strong> (<em>str.</em>) &#8211; <p>Optional parameter for defining the type of hierarchy
 (default: &#8220;npa&#8221;):</p>
 <ul>
-<li>&#8220;npa&#8221;: the standard NPA hierarchy (<a class="reference external" href="http://dx.doi.org/10.1137/090760155">doi:10.1137/090760155</a>).</li>
+<li>&#8220;npa&#8221;: the standard NPA hierarchy (<a class="reference external" href="http://dx.doi.org/10.1137/090760155">doi:10.1137/090760155</a>). When the variables are commutative, this formulation is identical to the Lasserre hierarchy.</li>
+<li>&#8220;npa_chordal&#8221;: chordal graph extension to improve sparsity (<a class="reference external" href="http://dx.doi.org/doi:10.1137/050623802">doi:10.1137/050623802</a>)</li>
+<li>&#8220;moroder&#8221;: <a class="reference external" href="http://dx.doi.org/10.1103/PhysRevLett.111.030501">doi:10.1103/PhysRevLett.111.030501</a></li>
 </ul>
-<p>When the variables are commutative, this formulation is
-identical to the Lasserre hierarchy.
-* &#8220;npa_chordal&#8221;: chordal graph extension to improve
-sparsity (<a class="reference external" href="http://dx.doi.org/doi:10.1137/050623802">doi:10.1137/050623802</a>)
-* &#8220;moroder&#8221;: <a class="reference external" href="http://dx.doi.org/10.1103/PhysRevLett.111.030501">doi:10.1103/PhysRevLett.111.030501</a></p>
 </li>
 <li><strong>normalized</strong> (<em>bool.</em>) &#8211; Optional parameter for changing the normalization of
 states over which the optimization happens. Turn it off
