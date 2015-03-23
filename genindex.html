@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; Ncpol2sdpa 1.6 documentation</title>
+  <title>Index &mdash; Ncpol2sdpa 1.7 documentation</title>
   
 
   
@@ -29,7 +29,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.6 documentation" href="index.html"/> 
+    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -76,8 +76,10 @@
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa-picos-and-mosek">Functions to Work with SDPA, PICOS, and MOSEK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -125,6 +127,7 @@
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
@@ -174,6 +177,10 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="reference.html#ncpol2sdpa.fermionic_constraints">fermionic_constraints() (in module ncpol2sdpa)</a>
+  </dt>
+
+      
+  <dt><a href="reference.html#ncpol2sdpa.find_rank_loop">find_rank_loop() (in module ncpol2sdpa)</a>
   </dt>
 
   </dl></td>
@@ -240,6 +247,10 @@
   <dt><a href="reference.html#ncpol2sdpa.pauli_constraints">pauli_constraints() (in module ncpol2sdpa)</a>
   </dt>
 
+      
+  <dt><a href="reference.html#ncpol2sdpa.SdpRelaxation.process_constraints">process_constraints() (ncpol2sdpa.SdpRelaxation method)</a>
+  </dt>
+
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
@@ -249,9 +260,23 @@
   </dl></td>
 </tr></table>
 
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference.html#ncpol2sdpa.read_sdpa_out">read_sdpa_out() (in module ncpol2sdpa)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference.html#ncpol2sdpa.save_monomial_index">save_monomial_index() (in module ncpol2sdpa)</a>
+  </dt>
+
       
   <dt><a href="reference.html#ncpol2sdpa.SdpRelaxation">SdpRelaxation (class in ncpol2sdpa)</a>
   </dt>
@@ -266,11 +291,21 @@
   <dt><a href="reference.html#ncpol2sdpa.solve_sdp">solve_sdp() (in module ncpol2sdpa)</a>
   </dt>
 
+      
+  <dt><a href="reference.html#ncpol2sdpa.sos_decomposition">sos_decomposition() (in module ncpol2sdpa)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference.html#ncpol2sdpa.write_to_human_readable">write_to_human_readable() (in module ncpol2sdpa)</a>
+  </dt>
+
+  </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="reference.html#ncpol2sdpa.write_to_sdpa">write_to_sdpa() (in module ncpol2sdpa)</a>
@@ -309,7 +344,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.6',
+            VERSION:'1.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

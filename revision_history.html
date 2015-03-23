@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Revision History &mdash; Ncpol2sdpa 1.6 documentation</title>
+  <title>Revision History &mdash; Ncpol2sdpa 1.7 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.6 documentation" href="index.html"/>
+    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="index.html"/>
         <link rel="next" title="Function Reference" href="reference.html"/>
         <link rel="prev" title="Examples" href="exampleshtml.html"/> 
 
@@ -77,8 +77,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa-picos-and-mosek">Functions to Work with SDPA, PICOS, and MOSEK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -116,11 +118,24 @@
             
   <div class="section" id="revision-history">
 <h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this headline">¶</a></h1>
-<p><strong>Since version 1.6</strong></p>
+<p><strong>Version 1.7 (2015-03-23)</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li>Interface for Faacets.</li>
-<li>PPT constraint can be imposed directly in the Moroder hierarchy by passing the extra parameter <tt class="docutils literal"><span class="pre">ppt=True</span></tt> to the constructor.</li>
+<li>New: the function <tt class="docutils literal"><span class="pre">find_rank_loop</span></tt> aids the detection of a rank loop.</li>
+<li>New: the function <tt class="docutils literal"><span class="pre">write_to_human_readable</span></tt> writes the relaxation in a human-readable format.</li>
+<li>New: the function <tt class="docutils literal"><span class="pre">read_sdpa_out</span></tt> is now exposed to the user, primarily to help in detecting rank loops.</li>
+<li>New: the function <tt class="docutils literal"><span class="pre">save_monomial_index</span></tt> allows saving the monomial index of a relaxation.</li>
+<li>New: support for obtaining the SOS decomposition from a dual solution through the function <tt class="docutils literal"><span class="pre">sos_decomposition</span></tt>.</li>
+<li>New: optional parameter <tt class="docutils literal"><span class="pre">psd=[matrix1,</span> <span class="pre">matrix2,</span> <span class="pre">...,</span> <span class="pre">matrixn]</span></tt> can be passed to <tt class="docutils literal"><span class="pre">get_relaxation</span></tt> and <tt class="docutils literal"><span class="pre">process_constraints</span></tt> which contain symbolic matrices that should be positive semidefinite.</li>
+<li>New: solution matrices can be returned by <tt class="docutils literal"><span class="pre">solve_sdp</span></tt> by passing the optional
+parameter <tt class="docutils literal"><span class="pre">solutionmatrix=True</span></tt>. It does not work for diagonal blocks.</li>
+<li>New: basic interface for <a class="reference external" href="https://github.com/denisrosset/faacets-core">Faacets</a> via the function <tt class="docutils literal"><span class="pre">get_faacet_relaxation</span></tt>.</li>
+<li>New: PPT constraint can be imposed directly in the Moroder hierarchy by passing the extra parameter <tt class="docutils literal"><span class="pre">ppt=True</span></tt> to the constructor.</li>
+<li>New: Passing the optional parameter <tt class="docutils literal"><span class="pre">extramomentmatrices=...</span></tt> to <tt class="docutils literal"><span class="pre">get_relaxation</span></tt> allows defining new moment matrices either freely or based on the first one. Basic relations of the elements between the moment matrices can be imposed as strings passed through <tt class="docutils literal"><span class="pre">inequalites=...</span></tt>.</li>
+<li>Changed: Nieto-Silleras hierarchy is no longer supported through an option. Now constraints have to be manually defined.</li>
+<li>Changed: Monomials are not saved automatically with <tt class="docutils literal"><span class="pre">verbose=2</span></tt>.</li>
+<li>Fixed: wider range of substitutions supported, including a polynomial on the right-hands side of the substitution.</li>
+<li>Fixed: constraints for fermionic and bosonic systems and Pauli operators.</li>
 </ul>
 </div></blockquote>
 <p><strong>Version 1.6 (2014-12-22)</strong></p>
@@ -262,7 +277,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.6',
+            VERSION:'1.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

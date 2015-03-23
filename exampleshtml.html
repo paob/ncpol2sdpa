@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Examples &mdash; Ncpol2sdpa 1.6 documentation</title>
+  <title>Examples &mdash; Ncpol2sdpa 1.7 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.6 documentation" href="index.html"/>
+    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="index.html"/>
         <link rel="next" title="Revision History" href="revision_history.html"/>
         <link rel="prev" title="Download and Installation" href="download.html"/> 
 
@@ -77,8 +77,10 @@
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa-picos-and-mosek">Functions to Work with SDPA, PICOS, and MOSEK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -232,6 +234,13 @@ function:</p>
 </pre></div>
 </div>
 <p>This is close to the analytical optimum of <span class="math">\(-3/4\)</span>.</p>
+<p>If we solve the SDP with the arbitrary-precision solver <tt class="docutils literal"><span class="pre">sdpa_gmp</span></tt>, we can find a rank loop at level two, indicating that convergence has been achieved. To see this, we read the solution file and analyse the ranks:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">primal</span><span class="p">,</span> <span class="n">dual</span><span class="p">,</span> <span class="n">x_sol</span><span class="p">,</span> <span class="n">y_sol</span> <span class="o">=</span> <span class="n">read_sdpa_out</span><span class="p">(</span><span class="s">&quot;examplenc.out&quot;</span><span class="p">,</span>
+                                           <span class="n">solutionmatrix</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">find_rank_loop</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="n">x_sol</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The output for this is <tt class="docutils literal"><span class="pre">[2,</span> <span class="pre">2]</span></tt>, clearly showing a rank loop.</p>
 </div>
 <div class="section" id="example-2-using-mosek-or-picos">
 <h2>Example 2: Using MOSEK or PICOS<a class="headerlink" href="#example-2-using-mosek-or-picos" title="Permalink to this headline">¶</a></h2>
@@ -334,7 +343,7 @@ interpret.</p>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="n">hamiltonian</span> <span class="o">+=</span> <span class="n">hbar</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="p">(</span><span class="n">Dagger</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
 
-<span class="n">monomial_substitutions</span><span class="p">,</span> <span class="n">equalities</span> <span class="o">=</span> <span class="n">bosonic_constraints</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">substitutions</span> <span class="o">=</span> <span class="n">bosonic_constraints</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="n">inequalities</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -343,20 +352,11 @@ interpret.</p>
 <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">hamiltonian</span><span class="p">,</span>
-                             <span class="n">equalities</span><span class="o">=</span><span class="n">equalities</span><span class="p">,</span>
-                             <span class="n">substitutions</span><span class="o">=</span><span class="n">substitutions</span><span class="p">,</span>
-                             <span class="n">removeequalities</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                             <span class="n">substitutions</span><span class="o">=</span><span class="n">substitutions</span><span class="p">)</span>
 <span class="n">write_to_sdpa</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">,</span> <span class="s">&#39;harmonic_oscillator.dat-s&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Solving the SDP for <span class="math">\(N=4\)</span>, for instance, gives the following
-result:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">objValPrimal</span> <span class="o">=</span> <span class="o">+</span><span class="mf">1.9999998358414430e+00</span>
-<span class="n">objValDual</span>   <span class="o">=</span> <span class="o">+</span><span class="mf">1.9999993671869802e+00</span>
-</pre></div>
-</div>
-<p>This is very close to the analytic result of 2. The result is similarly
-precise for arbitrary numbers of oscillators.</p>
+<p>The result is very close to zero, as the constant term is ignored in the objective function. The result is similarly precise for arbitrary numbers of oscillators.</p>
 <p>It is remarkable that we get the correct value at the first level of
 relaxation, but this property is typical for bosonic systems&nbsp;(Navascués
 et al. 2013).</p>
@@ -420,26 +420,31 @@ level of the SDP relaxation and the objective.</p>
 <p>We must define further constraints, namely that the joint probabilities
 must match:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">probabilities</span> <span class="o">=</span> <span class="n">joint_probabilities</span><span class="p">()</span>
-<span class="n">equalities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">k</span><span class="o">=</span><span class="mi">0</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">)):</span>
-    <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
     <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">)):</span>
-    <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_B</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
     <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A_configuration</span><span class="p">)):</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B_configuration</span><span class="p">)):</span>
-        <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">P_B</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">P_B</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
         <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">bounds</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="o">-</span><span class="n">bound</span> <span class="k">for</span> <span class="n">bound</span> <span class="ow">in</span> <span class="n">bounds</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>From here, the solution follows the usual pathway, indicating that we
-are requesting the Nieto-Silleras hierarchy:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">([</span><span class="n">flatten</span><span class="p">([</span><span class="n">P_A</span><span class="p">,</span> <span class="n">P_B</span><span class="p">])],</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                               <span class="n">hierarchy</span><span class="o">=</span><span class="s">&quot;nieto-silleras&quot;</span><span class="p">)</span>
+<p>We also have to define normalization of the subalgebras, in this case, only one:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;-0[0,0]+1.0&quot;</span><span class="p">)</span>
+<span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;0[0,0]-1.0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>From here, the solution follows the usual pathway:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sdpRelaxation</span> <span class="o">=</span> <span class="n">SdpRelaxation</span><span class="p">([</span><span class="n">flatten</span><span class="p">([</span><span class="n">P_A</span><span class="p">,</span> <span class="n">P_B</span><span class="p">])],</span>
+                              <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sdpRelaxation</span><span class="o">.</span><span class="n">get_relaxation</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
-                             <span class="n">equalities</span><span class="o">=</span><span class="n">equalities</span><span class="p">,</span>
+                             <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
                              <span class="n">substitutions</span><span class="o">=</span><span class="n">monomial_substitutions</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">solve_sdp</span><span class="p">(</span><span class="n">sdpRelaxation</span><span class="p">))</span>
@@ -596,7 +601,7 @@ Programming Algorithm Parallel Version.” <em>Parallel Computing</em> 29 (8):
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.6',
+            VERSION:'1.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

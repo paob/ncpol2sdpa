@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction &mdash; Ncpol2sdpa 1.6 documentation</title>
+  <title>Introduction &mdash; Ncpol2sdpa 1.7 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.6 documentation" href="#"/>
+    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="#"/>
         <link rel="next" title="Download and Installation" href="download.html"/> 
 
   
@@ -76,8 +76,10 @@
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa-picos-and-mosek">Functions to Work with SDPA, PICOS, and MOSEK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -122,10 +124,11 @@
 <li><a class="reference external" href="http:/dx.doi.org/10.1103/PhysRevLett.98.010401">Maximum quantum violation</a> of <a class="reference external" href="http://peterwittek.com/2014/06/quantum-bound-on-the-chsh-inequality-using-sdp/">Bell inequalities</a>, also in <a class="reference external" href="http://peterwittek.github.io/multipartite_entanglement/">multipartite scenarios</a>.</li>
 <li><a class="reference external" href="http://dx.doi.org/10.1088/1367-2630/16/1/013035">Nieto-Silleras</a> hierarchy for <a class="reference external" href="http://peterwittek.com/2014/11/the-nieto-silleras-and-moroder-hierarchies-in-ncpol2sdpa/">quantifying randomness</a>.</li>
 <li><a class="reference external" href="http://dx.doi.org/10.1103/PhysRevLett.111.030501">Moroder</a> hierarchy to enable PPT-style and other additional constraints.</li>
-<li>If using commutative variables, the hierarchy is identical to <a class="reference external" href="http://dx.doi.org/10.1137/S1052623400366802">Lasserre&#8217;s</a>.</li>
+<li>Sums-of-square (SOS) decomposition based on the dual solution.</li>
+<li>If using commutative variables, the hierarchy is identical to <a class="reference external" href="http://dx.doi.org/10.1137/S1052623400366802">Lasserre&#8217;s</a>. In this case, the functionality resembles the MATLAB toolboxes <a class="reference external" href="http://homepages.laas.fr/henrion/software/gloptipoly/">Gloptipoly</a>, and, with the chordal extension, <a class="reference external" href="http://sparsepop.sourceforge.net/">SparsePOP</a>.</li>
 </ul>
 <p>The implementation has an intuitive syntax for entering problems and it scales for a larger number of noncommutative variables using a sparse representation of the SDP problem. Further details are found in the following paper:</p>
-<p>Wittek, P. (2014). <a class="reference external" href="http://arxiv.org/abs/1308.6029">Ncpol2sdpa &#8211; Sparse Semidefinite Programming Relaxations for Polynomial Optimization Problems of Noncommuting Variables</a>. To Appear in ACM Transactions on Mathematical Software.</p>
+<p>Wittek, P. (2015). <a class="reference external" href="http://arxiv.org/abs/1308.6029">Ncpol2sdpa &#8211; Sparse Semidefinite Programming Relaxations for Polynomial Optimization Problems of Noncommuting Variables</a>. To Appear in ACM Transactions on Mathematical Software.</p>
 <div class="section" id="copyright-and-license">
 <h2>Copyright and License<a class="headerlink" href="#copyright-and-license" title="Permalink to this headline">¶</a></h2>
 <p>Copyright © 2012-2015 P. Wittek</p>
@@ -176,7 +179,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.6',
+            VERSION:'1.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

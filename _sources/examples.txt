@@ -145,6 +145,16 @@ function:
 
 This is close to the analytical optimum of :math:`-3/4`.
 
+If we solve the SDP with the arbitrary-precision solver ``sdpa_gmp``, we can find a rank loop at level two, indicating that convergence has been achieved. To see this, we read the solution file and analyse the ranks:
+
+::
+
+    primal, dual, x_sol, y_sol = read_sdpa_out("examplenc.out", 
+                                               solutionmatrix=True)
+    print find_rank_loop(sdpRelaxation, x_sol[0])
+
+The output for this is ``[2, 2]``, clearly showing a rank loop.
+
 Example 2: Using MOSEK or PICOS
 ==================================================
 
@@ -269,7 +279,7 @@ interpret.
     for i in range(N):
         hamiltonian += hbar*omega*(Dagger(a[i])*a[i]+0.5)
 
-    monomial_substitutions, equalities = bosonic_constraints(a)
+    substitutions = bosonic_constraints(a)
     inequalities = []
 
     time0 = time.time()
@@ -278,21 +288,10 @@ interpret.
     verbose = 1
     sdpRelaxation = SdpRelaxation(a)
     sdpRelaxation.get_relaxation(level, objective=hamiltonian,
-                                 equalities=equalities,
-                                 substitutions=substitutions,
-                                 removeequalities=True)
+                                 substitutions=substitutions)
     write_to_sdpa(sdpRelaxation, 'harmonic_oscillator.dat-s')                      
 
-Solving the SDP for :math:`N=4`, for instance, gives the following
-result:
-
-::
-
-    objValPrimal = +1.9999998358414430e+00
-    objValDual   = +1.9999993671869802e+00
-
-This is very close to the analytic result of 2. The result is similarly
-precise for arbitrary numbers of oscillators.
+The result is very close to zero, as the constant term is ignored in the objective function. The result is similarly precise for arbitrary numbers of oscillators.
 
 It is remarkable that we get the correct value at the first level of
 relaxation, but this property is typical for bosonic systems (Navascués
@@ -368,28 +367,35 @@ must match:
 ::
 
     probabilities = joint_probabilities()
-    equalities = []
+    bounds = []
     k=0
     for i in range(len(A_configuration)):
-        equalities.append(P_A[i][0] - probabilities[k])
+        bounds.append(P_A[i][0] - probabilities[k])
         k += 1
     for i in range(len(B_configuration)):
-        equalities.append(P_B[i][0] - probabilities[k])
+        bounds.append(P_B[i][0] - probabilities[k])
         k += 1
     for i in range(len(A_configuration)):
         for j in range(len(B_configuration)):
-            equalities.append(P_A[i][0]*P_B[j][0] - probabilities[k])
+            bounds.append(P_A[i][0]*P_B[j][0] - probabilities[k])
             k += 1
+    bounds.extend([-bound for bound in bounds])
 
-From here, the solution follows the usual pathway, indicating that we
-are requesting the Nieto-Silleras hierarchy:
+We also have to define normalization of the subalgebras, in this case, only one:
 
 ::
 
-    sdpRelaxation = SdpRelaxation([flatten([P_A, P_B])], verbose=2,
-                                   hierarchy="nieto-silleras")
+    bounds.append("-0[0,0]+1.0")
+    bounds.append("0[0,0]-1.0")
+    
+From here, the solution follows the usual pathway:
+
+::
+
+    sdpRelaxation = SdpRelaxation([flatten([P_A, P_B])], 
+                                  normalized=False, verbose=2)
     sdpRelaxation.get_relaxation(level, objective=objective, 
-                                 equalities=equalities,
+                                 bounds=bounds,
                                  substitutions=monomial_substitutions)
 
     print(solve_sdp(sdpRelaxation))
