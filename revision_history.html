@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Revision History &mdash; Ncpol2sdpa 1.7 documentation</title>
+  <title>Revision History &mdash; Ncpol2sdpa 1.8 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="index.html"/>
+    <link rel="top" title="Ncpol2sdpa 1.8 documentation" href="index.html"/>
         <link rel="next" title="Function Reference" href="reference.html"/>
         <link rel="prev" title="Examples" href="exampleshtml.html"/> 
 
@@ -63,24 +63,29 @@
 <li class="toctree-l2"><a class="reference internal" href="download.html#installation">Installation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#defining-a-polynomial-optimization-problem-of-commuting-variables">Defining a Polynomial Optimization Problem of Commuting Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#generating-and-solving-the-relaxation">Generating and Solving the Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#analyzing-the-solution">Analyzing the Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#debugging-the-sdp-relaxation">Debugging the SDP Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#defining-and-solving-an-optimization-problem-of-noncommuting-variables">Defining and Solving an Optimization Problem of Noncommuting Variables</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="exampleshtml.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-toy-example">Example 1: Toy Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-using-mosek-or-picos">Example 2: Using MOSEK or PICOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-mixed-level-relaxation-of-a-bell-inequality">Example 3: Mixed-Level Relaxation of a Bell Inequality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-bosonic-system">Example 4: Bosonic System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-nieto-silleras-hierarchy">Example 5: Using the Nieto-Silleras Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-using-the-moroder-hierarchy">Example 6: Using the Moroder Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-7-sparse-relaxation-with-chordal-extension">Example 7: Sparse Relaxation with Chordal Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-mixed-level-relaxation-of-a-bell-inequality">Example 1: Mixed-Level Relaxation of a Bell Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-additional-manipulation-of-the-generated-sdps-with-picos">Example 2: Additional manipulation of the generated SDPs with PICOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-bosonic-system">Example 3: Bosonic System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-using-the-nieto-silleras-hierarchy">Example 4: Using the Nieto-Silleras Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-moroder-hierarchy">Example 5: Using the Moroder Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-sparse-relaxation-with-chordal-extension">Example 6: Sparse Relaxation with Chordal Extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-export-solve-and-study-relaxations">Functions to Export, Solve, and Study Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -118,22 +123,34 @@
             
   <div class="section" id="revision-history">
 <h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this headline">¶</a></h1>
+<p><strong>Version 1.8 (2015-05-25)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>New: Complex moment matrices are embedded to as real matrices in the SDPA export and the <code class="docutils literal"><span class="pre">solve_sdp</span></code> function.</li>
+<li>New: Localizing monomials can be fine-tuned by supplying them to <code class="docutils literal"><span class="pre">get_relaxation</span></code> through the optional parameter <code class="docutils literal"><span class="pre">localizing_monomials</span></code>.</li>
+<li>New: <cite>solve_sdp</cite> can also solve a problem with Mosek.</li>
+<li>New: The function <cite>get_xmat_value</cite> returns the matching value for a monomial from a solution matrix, given the relaxation and the solution.</li>
+<li>Changed: <cite>solve_sdp</cite> no longer accepts parameters <cite>solutionmatrix</cite> and <cite>solverexecutable</cite>. All parameters are now passed via the solverparameters dictionary.</li>
+<li>Changed: Legacy Picos code removed. Requirement is now Picos &gt;=1.0.2.</li>
+<li>Fixed: Determining degree of polynomial also works when coefficient is complex.</li>
+</ul>
+</div></blockquote>
 <p><strong>Version 1.7 (2015-03-23)</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li>New: the function <tt class="docutils literal"><span class="pre">find_rank_loop</span></tt> aids the detection of a rank loop.</li>
-<li>New: the function <tt class="docutils literal"><span class="pre">write_to_human_readable</span></tt> writes the relaxation in a human-readable format.</li>
-<li>New: the function <tt class="docutils literal"><span class="pre">read_sdpa_out</span></tt> is now exposed to the user, primarily to help in detecting rank loops.</li>
-<li>New: the function <tt class="docutils literal"><span class="pre">save_monomial_index</span></tt> allows saving the monomial index of a relaxation.</li>
-<li>New: support for obtaining the SOS decomposition from a dual solution through the function <tt class="docutils literal"><span class="pre">sos_decomposition</span></tt>.</li>
-<li>New: optional parameter <tt class="docutils literal"><span class="pre">psd=[matrix1,</span> <span class="pre">matrix2,</span> <span class="pre">...,</span> <span class="pre">matrixn]</span></tt> can be passed to <tt class="docutils literal"><span class="pre">get_relaxation</span></tt> and <tt class="docutils literal"><span class="pre">process_constraints</span></tt> which contain symbolic matrices that should be positive semidefinite.</li>
-<li>New: solution matrices can be returned by <tt class="docutils literal"><span class="pre">solve_sdp</span></tt> by passing the optional
-parameter <tt class="docutils literal"><span class="pre">solutionmatrix=True</span></tt>. It does not work for diagonal blocks.</li>
-<li>New: basic interface for <a class="reference external" href="https://github.com/denisrosset/faacets-core">Faacets</a> via the function <tt class="docutils literal"><span class="pre">get_faacets_relaxation</span></tt>.</li>
-<li>New: PPT constraint can be imposed directly in the Moroder hierarchy by passing the extra parameter <tt class="docutils literal"><span class="pre">ppt=True</span></tt> to the constructor.</li>
-<li>New: Passing the optional parameter <tt class="docutils literal"><span class="pre">extramomentmatrices=...</span></tt> to <tt class="docutils literal"><span class="pre">get_relaxation</span></tt> allows defining new moment matrices either freely or based on the first one. Basic relations of the elements between the moment matrices can be imposed as strings passed through <tt class="docutils literal"><span class="pre">inequalites=...</span></tt>.</li>
+<li>New: the function <code class="docutils literal"><span class="pre">find_rank_loop</span></code> aids the detection of a rank loop.</li>
+<li>New: the function <code class="docutils literal"><span class="pre">write_to_human_readable</span></code> writes the relaxation in a human-readable format.</li>
+<li>New: the function <code class="docutils literal"><span class="pre">read_sdpa_out</span></code> is now exposed to the user, primarily to help in detecting rank loops.</li>
+<li>New: the function <code class="docutils literal"><span class="pre">save_monomial_index</span></code> allows saving the monomial index of a relaxation.</li>
+<li>New: support for obtaining the SOS decomposition from a dual solution through the function <code class="docutils literal"><span class="pre">sos_decomposition</span></code>.</li>
+<li>New: optional parameter <code class="docutils literal"><span class="pre">psd=[matrix1,</span> <span class="pre">matrix2,</span> <span class="pre">...,</span> <span class="pre">matrixn]</span></code> can be passed to <code class="docutils literal"><span class="pre">get_relaxation</span></code> and <code class="docutils literal"><span class="pre">process_constraints</span></code> which contain symbolic matrices that should be positive semidefinite.</li>
+<li>New: solution matrices can be returned by <code class="docutils literal"><span class="pre">solve_sdp</span></code> by passing the optional
+parameter <code class="docutils literal"><span class="pre">solutionmatrix=True</span></code>. It does not work for diagonal blocks.</li>
+<li>New: basic interface for <a class="reference external" href="https://github.com/denisrosset/faacets-core">Faacets</a> via the function <code class="docutils literal"><span class="pre">get_faacets_relaxation</span></code>.</li>
+<li>New: PPT constraint can be imposed directly in the Moroder hierarchy by passing the extra parameter <code class="docutils literal"><span class="pre">ppt=True</span></code> to the constructor.</li>
+<li>New: Passing the optional parameter <code class="docutils literal"><span class="pre">extramomentmatrices=...</span></code> to <code class="docutils literal"><span class="pre">get_relaxation</span></code> allows defining new moment matrices either freely or based on the first one. Basic relations of the elements between the moment matrices can be imposed as strings passed through <code class="docutils literal"><span class="pre">inequalites=...</span></code>.</li>
 <li>Changed: Nieto-Silleras hierarchy is no longer supported through an option. Now constraints have to be manually defined.</li>
-<li>Changed: Monomials are not saved automatically with <tt class="docutils literal"><span class="pre">verbose=2</span></tt>.</li>
+<li>Changed: Monomials are not saved automatically with <code class="docutils literal"><span class="pre">verbose=2</span></code>.</li>
 <li>Fixed: wider range of substitutions supported, including a polynomial on the right-hands side of the substitution.</li>
 <li>Fixed: constraints for fermionic and bosonic systems and Pauli operators.</li>
 </ul>
@@ -143,10 +160,10 @@ parameter <tt class="docutils literal"><span class="pre">solutionmatrix=True</sp
 <div><ul class="simple">
 <li>Syntax for passing parameters changed. Only the level of the relaxation is compulsory for obtaining a relaxation.</li>
 <li>Extra parameter for bounds on the variables was added. Syntax is identical to the inequalities. The difference is that the inequalities in the bounds will not be relaxed by localizing matrices.</li>
-<li>Support for chordal graph extension in the commutative case (doi:<a class="reference external" href="http://dx.doi.org/10.1137/050623802">10.1137/050623802</a>). Pass <tt class="docutils literal"><span class="pre">hierarchy=&quot;npa_chordal&quot;</span></tt> to the constructor.</li>
-<li>It is possible to pass variables which will not be relaxed. Pass <tt class="docutils literal"><span class="pre">nonrelaxed=[variables]</span></tt> to the constructor.</li>
-<li>It is possible to change the constraints once the moment matrix is generated. Refer to the new function <tt class="docutils literal"><span class="pre">process_constraints</span></tt>.</li>
-<li>Extra parameter <tt class="docutils literal"><span class="pre">nsextraobjvars=[]</span></tt> was added for passing additional variables to the Nieto-Silleras hierarchy. This is important because the top-left elements of the blocks of moment matrices in the relaxation are not one: they add up to one. Hence specifying the last element of a measurement becomes possible with this option. The number of elements in this must match the number of behaviours.</li>
+<li>Support for chordal graph extension in the commutative case (doi:<a class="reference external" href="http://dx.doi.org/10.1137/050623802">10.1137/050623802</a>). Pass <code class="docutils literal"><span class="pre">hierarchy=&quot;npa_chordal&quot;</span></code> to the constructor.</li>
+<li>It is possible to pass variables which will not be relaxed. Pass <code class="docutils literal"><span class="pre">nonrelaxed=[variables]</span></code> to the constructor.</li>
+<li>It is possible to change the constraints once the moment matrix is generated. Refer to the new function <code class="docutils literal"><span class="pre">process_constraints</span></code>.</li>
+<li>Extra parameter <code class="docutils literal"><span class="pre">nsextraobjvars=[]</span></code> was added for passing additional variables to the Nieto-Silleras hierarchy. This is important because the top-left elements of the blocks of moment matrices in the relaxation are not one: they add up to one. Hence specifying the last element of a measurement becomes possible with this option. The number of elements in this must match the number of behaviours.</li>
 <li>PICOS conversion routines were separated and reworked to ensure sparsity.</li>
 <li>Moved documentation to Sphinx.</li>
 <li>SciPy dependency made optional.</li>
@@ -277,7 +294,7 @@ parameter <tt class="docutils literal"><span class="pre">solutionmatrix=True</sp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.7',
+            VERSION:'1.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -286,7 +303,7 @@ parameter <tt class="docutils literal"><span class="pre">solutionmatrix=True</sp
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

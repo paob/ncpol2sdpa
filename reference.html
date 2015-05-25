@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Function Reference &mdash; Ncpol2sdpa 1.7 documentation</title>
+  <title>Function Reference &mdash; Ncpol2sdpa 1.8 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="index.html"/>
+    <link rel="top" title="Ncpol2sdpa 1.8 documentation" href="index.html"/>
         <link rel="prev" title="Revision History" href="revision_history.html"/> 
 
   
@@ -62,24 +62,29 @@
 <li class="toctree-l2"><a class="reference internal" href="download.html#installation">Installation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#defining-a-polynomial-optimization-problem-of-commuting-variables">Defining a Polynomial Optimization Problem of Commuting Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#generating-and-solving-the-relaxation">Generating and Solving the Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#analyzing-the-solution">Analyzing the Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#debugging-the-sdp-relaxation">Debugging the SDP Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#defining-and-solving-an-optimization-problem-of-noncommuting-variables">Defining and Solving an Optimization Problem of Noncommuting Variables</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="exampleshtml.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-toy-example">Example 1: Toy Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-using-mosek-or-picos">Example 2: Using MOSEK or PICOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-mixed-level-relaxation-of-a-bell-inequality">Example 3: Mixed-Level Relaxation of a Bell Inequality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-bosonic-system">Example 4: Bosonic System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-nieto-silleras-hierarchy">Example 5: Using the Nieto-Silleras Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-using-the-moroder-hierarchy">Example 6: Using the Moroder Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-7-sparse-relaxation-with-chordal-extension">Example 7: Sparse Relaxation with Chordal Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-mixed-level-relaxation-of-a-bell-inequality">Example 1: Mixed-Level Relaxation of a Bell Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-additional-manipulation-of-the-generated-sdps-with-picos">Example 2: Additional manipulation of the generated SDPs with PICOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-bosonic-system">Example 3: Bosonic System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-using-the-nieto-silleras-hierarchy">Example 4: Using the Nieto-Silleras Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-moroder-hierarchy">Example 5: Using the Moroder Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-sparse-relaxation-with-chordal-extension">Example 6: Sparse Relaxation with Chordal Extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions-to-export-solve-and-study-relaxations">Functions to Export, Solve, and Study Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -121,20 +126,20 @@
 <h2>SdpRelaxation Class<a class="headerlink" href="#sdprelaxation-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="ncpol2sdpa.SdpRelaxation">
-<em class="property">class </em><tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">SdpRelaxation</tt><big>(</big><em>variables</em>, <em>nonrelaxed=None</em>, <em>verbose=0</em>, <em>hierarchy='npa'</em>, <em>normalized=True</em>, <em>ppt=False</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ncpol2sdpa.</code><code class="descname">SdpRelaxation</code><span class="sig-paren">(</span><em>variables</em>, <em>nonrelaxed=None</em>, <em>verbose=0</em>, <em>hierarchy='npa'</em>, <em>normalized=True</em>, <em>ppt=False</em>, <em>matrix_var_dim=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for obtaining sparse SDP relaxation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>variables</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt> or
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>
+<li><strong>variables</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></code> or
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>
 or a list of list.) &#8211; Commutative or noncommutative, Hermitian or nonhermiatian
 variables, possibly a list of list of variables if the
 hierarchy is not NPA.</li>
-<li><strong>nonrelaxed</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt> or
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>
+<li><strong>nonrelaxed</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></code> or
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>
 or a list of list.) &#8211; Optional variables which are not to be relaxed.</li>
 <li><strong>verbose</strong> (<em>int.</em>) &#8211; <p>Optional parameter for level of verbosity:</p>
 <ul>
@@ -164,7 +169,7 @@ constraint in the Moroder hierarchy.</li>
 </table>
 <dl class="method">
 <dt id="ncpol2sdpa.SdpRelaxation.get_relaxation">
-<tt class="descname">get_relaxation</tt><big>(</big><em>level</em>, <em>objective=None</em>, <em>inequalities=None</em>, <em>equalities=None</em>, <em>substitutions=None</em>, <em>bounds=None</em>, <em>psd=None</em>, <em>removeequalities=False</em>, <em>extramonomials=None</em>, <em>extramomentmatrices=None</em>, <em>extraobjexpr=None</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation.get_relaxation" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_relaxation</code><span class="sig-paren">(</span><em>level</em>, <em>objective=None</em>, <em>inequalities=None</em>, <em>equalities=None</em>, <em>substitutions=None</em>, <em>bounds=None</em>, <em>psd=None</em>, <em>removeequalities=False</em>, <em>extramonomials=None</em>, <em>extramomentmatrices=None</em>, <em>extraobjexpr=None</em>, <em>localizing_monomials=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation.get_relaxation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the SDP relaxation of a noncommutative polynomial optimization
 problem.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -175,18 +180,18 @@ problem.</p>
 <li><strong>level</strong> (<em>int.</em>) &#8211; The level of the relaxation. The value -1 will skip
 automatic monomial generation and use only the monomials
 supplied by the option <cite>extramonomials</cite>.</li>
-<li><strong>obj</strong> (<tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter to describe the objective function.</li>
-<li><strong>inequalities</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter to list inequality constraints.</li>
-<li><strong>equalities</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter to list equality constraints.</li>
-<li><strong>substitutions</strong> (dict of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter containing monomials that can
+<li><strong>obj</strong> (<code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter to describe the objective function.</li>
+<li><strong>inequalities</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter to list inequality constraints.</li>
+<li><strong>equalities</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter to list equality constraints.</li>
+<li><strong>substitutions</strong> (dict of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter containing monomials that can
 be replaced (e.g., idempotent variables).</li>
-<li><strong>bounds</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter of bounds on variables which will not
+<li><strong>bounds</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter of bounds on variables which will not
 be relaxed by localizing matrices.</li>
-<li><strong>psd</strong> (list of lists or of <tt class="xref py py-class docutils literal"><span class="pre">sympy.matrices.Matrix</span></tt>.) &#8211; Optional parameter of list of matrices that should be
+<li><strong>psd</strong> (list of lists or of <code class="xref py py-class docutils literal"><span class="pre">sympy.matrices.Matrix</span></code>.) &#8211; Optional parameter of list of matrices that should be
 positive semidefinite.</li>
 <li><strong>removeequalities</strong> (<em>bool.</em>) &#8211; Optional parameter to attempt removing the
 equalities by solving the linear equations.</li>
-<li><strong>extramonomials</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional paramter of monomials to be included, on
+<li><strong>extramonomials</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional paramter of monomials to be included, on
 top of the requested level of relaxation.</li>
 <li><strong>extramomentmatrices</strong> (<em>list of list of str.</em>) &#8211; Optional paramter of duplicating or adding
 moment matrices.  A new moment matrix can be
@@ -196,10 +201,18 @@ constraint (&#8220;ppt&#8221;). Each new moment matrix is
 requested as a list of string of these options.
 For instance, adding a single new moment matrix
 as a copy of the first would be
-<tt class="docutils literal"><span class="pre">extramomentmatrices=[[&quot;copy&quot;]]</span></tt>.</li>
+<code class="docutils literal"><span class="pre">extramomentmatrices=[[&quot;copy&quot;]]</span></code>.</li>
 <li><strong>extraobjexpr</strong> (<em>str.</em>) &#8211; Optional parameter of a string expression of a
 linear combination of moment matrix elements to be
 included in the objective function.</li>
+<li><strong>localizing_monomials</strong> (list of list of <cite>sympy.core.exp.Expr</cite>.) &#8211; Optional parameter to specify sets of
+localizing monomials for each constraint.
+The internal order of constraints is
+inequalities first, followed by the
+equalities. If the parameter is specified,
+but for a certain constraint the automatic
+localization is requested, leave None in
+its place in this parameter.</li>
 </ul>
 </td>
 </tr>
@@ -209,7 +222,7 @@ included in the objective function.</li>
 
 <dl class="method">
 <dt id="ncpol2sdpa.SdpRelaxation.process_constraints">
-<tt class="descname">process_constraints</tt><big>(</big><em>inequalities=None</em>, <em>equalities=None</em>, <em>bounds=None</em>, <em>psd=None</em>, <em>block_index=0</em>, <em>removeequalities=False</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation.process_constraints" title="Permalink to this definition">¶</a></dt>
+<code class="descname">process_constraints</code><span class="sig-paren">(</span><em>inequalities=None</em>, <em>equalities=None</em>, <em>bounds=None</em>, <em>psd=None</em>, <em>block_index=0</em>, <em>removeequalities=False</em>, <em>localizing_monomial_sets=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation.process_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process the constraints and generate localizing matrices. Useful only
 if the moment matrix already exists. Call it if you want to replace your
 constraints. The number of the respective types of constraints and the
@@ -219,11 +232,11 @@ maximum degree of each constraint must remain the same.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>inequalities</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter to list inequality constraints.</li>
-<li><strong>equalities</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter to list equality constraints.</li>
-<li><strong>bounds</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></tt>.) &#8211; Optional parameter of bounds on variables which will not
+<li><strong>inequalities</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter to list inequality constraints.</li>
+<li><strong>equalities</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter to list equality constraints.</li>
+<li><strong>bounds</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; Optional parameter of bounds on variables which will not
 be relaxed by localizing matrices.</li>
-<li><strong>psd</strong> (list of lists or of <tt class="xref py py-class docutils literal"><span class="pre">sympy.matrices.Matrix</span></tt>.) &#8211; Optional parameter of list of matrices that should be
+<li><strong>psd</strong> (list of lists or of <code class="xref py py-class docutils literal"><span class="pre">sympy.matrices.Matrix</span></code>.) &#8211; Optional parameter of list of matrices that should be
 positive semidefinite.</li>
 <li><strong>removeequalities</strong> (<em>bool.</em>) &#8211; Optional parameter to attempt removing the
 equalities by solving the linear equations.</li>
@@ -236,7 +249,7 @@ equalities by solving the linear equations.</li>
 
 <dl class="method">
 <dt id="ncpol2sdpa.SdpRelaxation.set_objective">
-<tt class="descname">set_objective</tt><big>(</big><em>objective</em>, <em>extraobjexpr=None</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation.set_objective" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_objective</code><span class="sig-paren">(</span><em>objective</em>, <em>extraobjexpr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.SdpRelaxation.set_objective" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set or change the objective function of the polynomial optimization
 problem.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -244,7 +257,7 @@ problem.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>objective</strong> (<tt class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></tt>) &#8211; Describes the objective function.</li>
+<li><strong>objective</strong> (<code class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></code>) &#8211; Describes the objective function.</li>
 <li><strong>extraobjexpr</strong> (<em>str.</em>) &#8211; Optional parameter of a string expression of a
 linear combination of moment matrix elements to be
 included in the objective function</li>
@@ -258,29 +271,42 @@ included in the objective function</li>
 </dd></dl>
 
 </div>
-<div class="section" id="functions-to-work-with-sdpa">
-<h2>Functions to Work with SDPA<a class="headerlink" href="#functions-to-work-with-sdpa" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions-to-help-define-polynomial-optimization-problems">
+<h2>Functions to Help Define Polynomial Optimization Problems<a class="headerlink" href="#functions-to-help-define-polynomial-optimization-problems" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="ncpol2sdpa.solve_sdp">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">solve_sdp</tt><big>(</big><em>sdpRelaxation</em>, <em>solutionmatrix=False</em>, <em>solverexecutable='sdpa'</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.solve_sdp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function to write out the SDP problem to a temporary
-file, call the solver, and parse the output.</p>
+<dt id="ncpol2sdpa.generate_variables">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">generate_variables</code><span class="sig-paren">(</span><em>n_vars</em>, <em>hermitian=False</em>, <em>commutative=False</em>, <em>name='x'</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.generate_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a number of commutative or noncommutative variables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_vars</strong> (<em>int.</em>) &#8211; The number of variables.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></code> or
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>
+variables</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ncpol2sdpa.get_ncmonomials">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">get_ncmonomials</code><span class="sig-paren">(</span><em>variables</em>, <em>degree</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.get_ncmonomials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all noncommutative monomials up to a degree</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to be solved.</li>
-<li><strong>solutionmatrix</strong> (<em>bool.</em>) &#8211; Optional parameter for retrieving the solution
-matrix.</li>
-<li><strong>solverexecutable</strong> (<em>str.</em>) &#8211; Optional paramater to specify the name of the
-executable if sdpa is not in the path or has a
-different name.</li>
+<li><strong>variables</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></code> or
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator</span></code>.) &#8211; The noncommutative variables to generate monomials from</li>
+<li><strong>degree</strong> (<em>int.</em>) &#8211; The maximum degree.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple of float &#8211; the primal and dual solution of the SDP,
-respectively.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of monomials.</p>
 </td>
 </tr>
 </tbody>
@@ -288,51 +314,70 @@ respectively.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ncpol2sdpa.write_to_sdpa">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">write_to_sdpa</tt><big>(</big><em>sdpRelaxation</em>, <em>filename</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.write_to_sdpa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write the SDP relaxation to SDPA format.</p>
+<dt id="ncpol2sdpa.ncdegree">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">ncdegree</code><span class="sig-paren">(</span><em>polynomial</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.ncdegree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the degree of a noncommutative polynomial.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>polynomial</strong> (<code class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></code>.) &#8211; Polynomial of noncommutive variables.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int &#8211; the degree of the polynomial.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ncpol2sdpa.flatten">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">flatten</code><span class="sig-paren">(</span><em>lol</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten a list of lists to a list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lol</strong> (<em>list of list.</em>) &#8211; A list of lists in arbitrary depth.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">flat list of elements.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="functions-to-export-solve-and-study-relaxations">
+<h2>Functions to Export, Solve, and Study Relaxations<a class="headerlink" href="#functions-to-export-solve-and-study-relaxations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ncpol2sdpa.solve_sdp">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">solve_sdp</code><span class="sig-paren">(</span><em>sdpRelaxation</em>, <em>solver='sdpa'</em>, <em>solverparameters=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.solve_sdp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a solver on the SDP relaxation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to write.</li>
-<li><strong>filename</strong> (<em>str.</em>) &#8211; The name of the file. It must have the suffix &#8221;.dat-s&#8221;</li>
+<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to be solved.</li>
+<li><strong>solver</strong> (<em>str.</em>) &#8211; The solver to be called, either &#8220;sdpa&#8221; or &#8220;mosek&#8221;.</li>
+<li><strong>solverparameters</strong> &#8211; Parameters to be passed to the solver.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="ncpol2sdpa.read_sdpa_out">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">read_sdpa_out</tt><big>(</big><em>filename</em>, <em>solutionmatrix=False</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.read_sdpa_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function to parse the output file of SDPA.
-:param filename: The name of the SDPA output file.
-:type filename: str.
-:param solutionmatrix: Optional parameter for retrieving the solution</p>
-<blockquote>
-<div>matrix.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="function">
 <dt id="ncpol2sdpa.find_rank_loop">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">find_rank_loop</tt><big>(</big><em>sdpRelaxation</em>, <em>x_mat</em>, <em>base_level=0</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.find_rank_loop" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">find_rank_loop</code><span class="sig-paren">(</span><em>sdpRelaxation</em>, <em>x_mat</em>, <em>base_level=0</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.find_rank_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function to detect rank loop in the solution matrix.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to be solved.</li>
-<li><strong>x_mat</strong> (<tt class="xref py py-class docutils literal"><span class="pre">numpy.array</span></tt>.) &#8211; The solution of the moment matrix.</li>
+<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation.</li>
+<li><strong>x_mat</strong> (<code class="xref py py-class docutils literal"><span class="pre">numpy.array</span></code>.) &#8211; The solution of the moment matrix.</li>
 <li><strong>base_level</strong> (<em>int.</em>) &#8211; Optional parameter for specifying the lower level
 relaxation for which the rank loop should be tested
 against.</li>
@@ -349,7 +394,7 @@ order of increasing degree.</p>
 
 <dl class="function">
 <dt id="ncpol2sdpa.sos_decomposition">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">sos_decomposition</tt><big>(</big><em>sdpRelaxation</em>, <em>y_mat</em>, <em>threshold=0.0</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.sos_decomposition" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">sos_decomposition</code><span class="sig-paren">(</span><em>sdpRelaxation</em>, <em>y_mat</em>, <em>threshold=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.sos_decomposition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a solution of the dual problem, it returns the SOS
 decomposition. Currently limited to unconstrained problems.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -357,8 +402,8 @@ decomposition. Currently limited to unconstrained problems.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to be solved.</li>
-<li><strong>y_mat</strong> (<tt class="xref py py-class docutils literal"><span class="pre">numpy.array</span></tt>.) &#8211; The dual solution of the problem.</li>
+<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to be solved.</li>
+<li><strong>y_mat</strong> (<code class="xref py py-class docutils literal"><span class="pre">numpy.array</span></code>.) &#8211; The dual solution of the problem.</li>
 <li><strong>threshold</strong> (<em>float.</em>) &#8211; Optional parameter for specifying the threshold value
 below which the eigenvalues and entries of the
 eigenvectors are disregarded.</li>
@@ -369,20 +414,76 @@ eigenvectors are disregarded.</li>
 </table>
 </dd></dl>
 
-</div>
-<div class="section" id="functions-to-work-with-picos-and-mosek">
-<h2>Functions to Work with PICOS and MOSEK<a class="headerlink" href="#functions-to-work-with-picos-and-mosek" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ncpol2sdpa.get_xmat_value">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">get_xmat_value</code><span class="sig-paren">(</span><em>monomial</em>, <em>sdpRelaxation</em>, <em>x_mat</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.get_xmat_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a solution of the primal problem and a monomial, it returns the
+value for the monomial in the solution matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>monomial</strong> (<code class="xref py py-class docutils literal"><span class="pre">sympy.core.exp.Expr</span></code>.) &#8211; The monomial for which the value is requested.</li>
+<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to be solved.</li>
+<li><strong>x_mat</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">numpy.array</span></code>.) &#8211; The primal solution of the problem.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ncpol2sdpa.write_to_sdpa">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">write_to_sdpa</code><span class="sig-paren">(</span><em>sdpRelaxation</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.write_to_sdpa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the SDP relaxation to SDPA format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to write.</li>
+<li><strong>filename</strong> (<em>str.</em>) &#8211; The name of the file. It must have the suffix &#8221;.dat-s&#8221;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ncpol2sdpa.read_sdpa_out">
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">read_sdpa_out</code><span class="sig-paren">(</span><em>filename</em>, <em>solutionmatrix=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.read_sdpa_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to parse the output file of SDPA.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<em>str.</em>) &#8211; The name of the SDPA output file.</li>
+<li><strong>solutionmatrix</strong> (<em>bool.</em>) &#8211; Optional parameter for retrieving the solution matrix.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple of two floats and optionally two lists of <cite>numpy.array</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="function">
 <dt id="ncpol2sdpa.convert_to_mosek">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">convert_to_mosek</tt><big>(</big><em>sdpRelaxation</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.convert_to_mosek" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">convert_to_mosek</code><span class="sig-paren">(</span><em>sdpRelaxation</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.convert_to_mosek" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert an SDP relaxation to a MOSEK task.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to convert.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to convert.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">mosek.Task</span></tt>.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">mosek.Task</span></code>.</td>
 </tr>
 </tbody>
 </table>
@@ -390,101 +491,26 @@ eigenvectors are disregarded.</li>
 
 <dl class="function">
 <dt id="ncpol2sdpa.convert_to_picos">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">convert_to_picos</tt><big>(</big><em>sdpRelaxation</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.convert_to_picos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert an SDP relaxation to a PICOS problem.</p>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">convert_to_picos</code><span class="sig-paren">(</span><em>sdpRelaxation</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.convert_to_picos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an SDP relaxation to a PICOS problem such that the exported
+.dat-s file is extremely sparse, there is not penalty imposed in terms of
+SDP variables or number of constraints. This conversion can be used for
+imposing extra constraints on the moment matrix, such as partial transpose.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to convert.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to convert.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">picos.Problem</span></tt>.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">picos.Problem</span></code>.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-</div>
-<div class="section" id="functions-to-help-define-polynomial-optimization-problems">
-<h2>Functions to Help Define Polynomial Optimization Problems<a class="headerlink" href="#functions-to-help-define-polynomial-optimization-problems" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="ncpol2sdpa.generate_variables">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">generate_variables</tt><big>(</big><em>n_vars</em>, <em>hermitian=False</em>, <em>commutative=False</em>, <em>name='x'</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.generate_variables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a number of commutative or noncommutative variables</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_vars</strong> (<em>int.</em>) &#8211; The number of variables.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt> or
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>
-variables</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="ncpol2sdpa.get_ncmonomials">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">get_ncmonomials</tt><big>(</big><em>variables</em>, <em>degree</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.get_ncmonomials" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates all noncommutative monomials up to a degree</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>variables</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt> or
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator</span></tt>.) &#8211; The noncommutative variables to generate monomials from</li>
-<li><strong>degree</strong> (<em>int.</em>) &#8211; The maximum degree.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of monomials.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="ncpol2sdpa.ncdegree">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">ncdegree</tt><big>(</big><em>polynomial</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.ncdegree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the degree of a noncommutative polynomial.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>polynomial</strong> (<tt class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></tt>.) &#8211; Polynomial of noncommutive variables.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int &#8211; the degree of the polynomial.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="ncpol2sdpa.flatten">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">flatten</tt><big>(</big><em>lol</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.flatten" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flatten a list of lists to a list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lol</strong> (<em>list of list.</em>) &#8211; A list of lists in arbitrary depth.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">flat list of elements.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="functions-to-analyze-generated-sdp-relaxations">
-<h2>Functions to Analyze Generated SDP Relaxations<a class="headerlink" href="#functions-to-analyze-generated-sdp-relaxations" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="ncpol2sdpa.save_monomial_index">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">save_monomial_index</tt><big>(</big><em>filename</em>, <em>monomial_index</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.save_monomial_index" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">save_monomial_index</code><span class="sig-paren">(</span><em>filename</em>, <em>monomial_index</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.save_monomial_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a monomial dictionary for debugging purposes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -492,7 +518,7 @@ variables</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filename</strong> (<em>str.</em>) &#8211; The name of the file to save to.</li>
-<li><strong>monomial_index</strong> (dict of <tt class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></tt>.) &#8211; The monomial index of the SDP relaxation.</li>
+<li><strong>monomial_index</strong> (dict of <code class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></code>.) &#8211; The monomial index of the SDP relaxation.</li>
 </ul>
 </td>
 </tr>
@@ -502,14 +528,14 @@ variables</td>
 
 <dl class="function">
 <dt id="ncpol2sdpa.write_to_human_readable">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">write_to_human_readable</tt><big>(</big><em>sdpRelaxation</em>, <em>filename</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.write_to_human_readable" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">write_to_human_readable</code><span class="sig-paren">(</span><em>sdpRelaxation</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.write_to_human_readable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the SDP relaxation to a human-readable format.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><tt class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></tt></a>.) &#8211; The SDP relaxation to write.</li>
+<li><strong>sdpRelaxation</strong> (<a class="reference internal" href="#ncpol2sdpa.SdpRelaxation" title="ncpol2sdpa.SdpRelaxation"><code class="xref py py-class docutils literal"><span class="pre">ncpol2sdpa.SdpRelaxation</span></code></a>.) &#8211; The SDP relaxation to write.</li>
 <li><strong>filename</strong> (<em>str.</em>) &#8211; The name of the file.</li>
 </ul>
 </td>
@@ -523,13 +549,13 @@ variables</td>
 <h2>Functions to Define Physics Problems<a class="headerlink" href="#functions-to-define-physics-problems" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="ncpol2sdpa.bosonic_constraints">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">bosonic_constraints</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.bosonic_constraints" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">bosonic_constraints</code><span class="sig-paren">(</span><em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.bosonic_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return  a set of constraints that define fermionic ladder operators.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt>.) &#8211; The non-Hermitian variables.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></code>.) &#8211; The non-Hermitian variables.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict of substitutions.</td>
 </tr>
@@ -539,13 +565,13 @@ variables</td>
 
 <dl class="function">
 <dt id="ncpol2sdpa.fermionic_constraints">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">fermionic_constraints</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.fermionic_constraints" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">fermionic_constraints</code><span class="sig-paren">(</span><em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.fermionic_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return  a set of constraints that define fermionic ladder operators.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></tt>.) &#8211; The non-Hermitian variables.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.Operator</span></code>.) &#8211; The non-Hermitian variables.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict of substitutions.</td>
 </tr>
@@ -555,16 +581,16 @@ variables</td>
 
 <dl class="function">
 <dt id="ncpol2sdpa.pauli_constraints">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">pauli_constraints</tt><big>(</big><em>X</em>, <em>Y</em>, <em>Z</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.pauli_constraints" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">pauli_constraints</code><span class="sig-paren">(</span><em>X</em>, <em>Y</em>, <em>Z</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.pauli_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return  a set of constraints that define Pauli spin operators.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; List of Pauli X operator on sites.</li>
-<li><strong>Y</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; List of Pauli Y operator on sites.</li>
-<li><strong>Z</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; List of Pauli Z operator on sites.</li>
+<li><strong>X</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; List of Pauli X operator on sites.</li>
+<li><strong>Y</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; List of Pauli Y operator on sites.</li>
+<li><strong>Z</strong> (list of <code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; List of Pauli Z operator on sites.</li>
 </ul>
 </td>
 </tr>
@@ -577,7 +603,7 @@ variables</td>
 
 <dl class="function">
 <dt id="ncpol2sdpa.get_neighbors">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">get_neighbors</tt><big>(</big><em>index</em>, <em>lattice_length</em>, <em>width=0</em>, <em>periodic=False</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.get_neighbors" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">get_neighbors</code><span class="sig-paren">(</span><em>index</em>, <em>lattice_length</em>, <em>width=0</em>, <em>periodic=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.get_neighbors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the neighbors of an operator in a lattice.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -601,7 +627,7 @@ conditions.</li>
 
 <dl class="function">
 <dt id="ncpol2sdpa.correlator">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">correlator</tt><big>(</big><em>A</em>, <em>B</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.correlator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">correlator</code><span class="sig-paren">(</span><em>A</em>, <em>B</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.correlator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Correlators between the probabilities of two parties.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -609,9 +635,9 @@ conditions.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>A</strong> (list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; Measurements of Alice.</li>
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; Measurements of Alice.</li>
 <li><strong>B</strong> (list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; Measurements of Bob.</li>
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; Measurements of Bob.</li>
 </ul>
 </td>
 </tr>
@@ -624,7 +650,7 @@ conditions.</li>
 
 <dl class="function">
 <dt id="ncpol2sdpa.generate_measurements">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">generate_measurements</tt><big>(</big><em>party</em>, <em>label</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.generate_measurements" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">generate_measurements</code><span class="sig-paren">(</span><em>party</em>, <em>label</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.generate_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate variables that behave like measurements.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -637,7 +663,7 @@ conditions.</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.</p>
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.</p>
 </td>
 </tr>
 </tbody>
@@ -646,7 +672,7 @@ conditions.</li>
 
 <dl class="function">
 <dt id="ncpol2sdpa.projective_measurement_constraints">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">projective_measurement_constraints</tt><big>(</big><em>*parties</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.projective_measurement_constraints" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">projective_measurement_constraints</code><span class="sig-paren">(</span><em>*parties</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.projective_measurement_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a set of constraints that define projective measurements.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -663,7 +689,7 @@ commutation relations.</td>
 
 <dl class="function">
 <dt id="ncpol2sdpa.maximum_violation">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">maximum_violation</tt><big>(</big><em>A_configuration</em>, <em>B_configuration</em>, <em>I</em>, <em>level</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.maximum_violation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">maximum_violation</code><span class="sig-paren">(</span><em>A_configuration</em>, <em>B_configuration</em>, <em>I</em>, <em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.maximum_violation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the maximum violation of a Bell inequality.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -686,7 +712,7 @@ commutation relations.</td>
 
 <dl class="function">
 <dt id="ncpol2sdpa.define_objective_with_I">
-<tt class="descclassname">ncpol2sdpa.</tt><tt class="descname">define_objective_with_I</tt><big>(</big><em>I</em>, <em>A</em>, <em>B</em><big>)</big><a class="headerlink" href="#ncpol2sdpa.define_objective_with_I" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ncpol2sdpa.</code><code class="descname">define_objective_with_I</code><span class="sig-paren">(</span><em>I</em>, <em>A</em>, <em>B</em><span class="sig-paren">)</span><a class="headerlink" href="#ncpol2sdpa.define_objective_with_I" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define a polynomial using measurements and an I matrix describing a Bell
 inequality.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -696,13 +722,13 @@ inequality.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>I</strong> (<em>list of list of int.</em>) &#8211; The I matrix of a Bell inequality in the Collins-Gisin notation.</li>
 <li><strong>A</strong> (list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; Measurements of Alice.</li>
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; Measurements of Alice.</li>
 <li><strong>B</strong> (list of list of
-<tt class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></tt>.) &#8211; Measurements of Bob.</li>
+<code class="xref py py-class docutils literal"><span class="pre">sympy.physics.quantum.operator.HermitianOperator</span></code>.) &#8211; Measurements of Bob.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></tt> &#8211; the objective function to be
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">sympy.core.expr.Expr</span></code> &#8211; the objective function to be
 solved by SDPA as minimization problem to find the maximum quantum
 violation.</p>
 </td>
@@ -750,7 +776,7 @@ violation.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.7',
+            VERSION:'1.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -759,7 +785,7 @@ violation.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

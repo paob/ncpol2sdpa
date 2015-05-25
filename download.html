@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Download and Installation &mdash; Ncpol2sdpa 1.7 documentation</title>
+  <title>Download and Installation &mdash; Ncpol2sdpa 1.8 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   
 
   
-    <link rel="top" title="Ncpol2sdpa 1.7 documentation" href="index.html"/>
-        <link rel="next" title="Examples" href="exampleshtml.html"/>
+    <link rel="top" title="Ncpol2sdpa 1.8 documentation" href="index.html"/>
+        <link rel="next" title="Tutorial" href="tutorial.html"/>
         <link rel="prev" title="Introduction" href="index.html"/> 
 
   
@@ -63,24 +63,29 @@
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#defining-a-polynomial-optimization-problem-of-commuting-variables">Defining a Polynomial Optimization Problem of Commuting Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#generating-and-solving-the-relaxation">Generating and Solving the Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#analyzing-the-solution">Analyzing the Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#debugging-the-sdp-relaxation">Debugging the SDP Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#defining-and-solving-an-optimization-problem-of-noncommuting-variables">Defining and Solving an Optimization Problem of Noncommuting Variables</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="exampleshtml.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-toy-example">Example 1: Toy Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-using-mosek-or-picos">Example 2: Using MOSEK or PICOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-mixed-level-relaxation-of-a-bell-inequality">Example 3: Mixed-Level Relaxation of a Bell Inequality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-bosonic-system">Example 4: Bosonic System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-nieto-silleras-hierarchy">Example 5: Using the Nieto-Silleras Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-using-the-moroder-hierarchy">Example 6: Using the Moroder Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-7-sparse-relaxation-with-chordal-extension">Example 7: Sparse Relaxation with Chordal Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-1-mixed-level-relaxation-of-a-bell-inequality">Example 1: Mixed-Level Relaxation of a Bell Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-2-additional-manipulation-of-the-generated-sdps-with-picos">Example 2: Additional manipulation of the generated SDPs with PICOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-3-bosonic-system">Example 3: Bosonic System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-4-using-the-nieto-silleras-hierarchy">Example 4: Using the Nieto-Silleras Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-5-using-the-moroder-hierarchy">Example 5: Using the Moroder Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#example-6-sparse-relaxation-with-chordal-extension">Example 6: Sparse Relaxation with Chordal Extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exampleshtml.html#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Function Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#sdprelaxation-class">SdpRelaxation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-sdpa">Functions to Work with SDPA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-work-with-picos-and-mosek">Functions to Work with PICOS and MOSEK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-help-define-polynomial-optimization-problems">Functions to Help Define Polynomial Optimization Problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-analyze-generated-sdp-relaxations">Functions to Analyze Generated SDP Relaxations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-export-solve-and-study-relaxations">Functions to Export, Solve, and Study Relaxations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html#functions-to-define-physics-problems">Functions to Define Physics Problems</a></li>
 </ul>
 </li>
@@ -118,7 +123,7 @@
             
   <div class="section" id="download-and-installation">
 <h1>Download and Installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h1>
-<p>The entire package for is available as a <a class="reference external" href="https://pypi.python.org/packages/source/n/ncpol2sdpa/ncpol2sdpa-1.7.tar.gz">gzipped tar</a> file from the <a class="reference external" href="https://pypi.python.org/pypi/ncpol2sdpa/">Python Package Index</a>, containing the source, documentation, and examples.</p>
+<p>The entire package for is available as a <a class="reference external" href="https://pypi.python.org/packages/source/n/ncpol2sdpa/ncpol2sdpa-1.8.tar.gz">gzipped tar</a> file from the <a class="reference external" href="https://pypi.python.org/pypi/ncpol2sdpa/">Python Package Index</a>, containing the source, documentation, and examples.</p>
 <p>The latest development version is available on <a class="reference external" href="https://github.com/peterwittek/ncpol2sdpa">GitHub</a>.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
@@ -156,7 +161,7 @@ $ python setup.py install --user
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="exampleshtml.html" class="btn btn-neutral float-right" title="Examples">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Introduction"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -188,7 +193,7 @@ $ python setup.py install --user
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.7',
+            VERSION:'1.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -197,7 +202,7 @@ $ python setup.py install --user
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
